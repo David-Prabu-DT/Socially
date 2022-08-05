@@ -2,7 +2,6 @@ import * as Yup from "yup";
 import { useState } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import { useNavigate } from "react-router-dom";
-import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Icon,
@@ -12,6 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import { motion } from "framer-motion";
+import { LoadingButton } from "@mui/lab";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -115,13 +115,7 @@ const SignUpForm = () => {
                     <IconButton
                       edge="end"
                       onClick={() => setShowPassword((prev) => !prev)}
-                    >
-                      <Icon<{}>
-                        icon={
-                          showPassword ? "eva:eye-fill" : "eva:eye-off-fill"
-                        }
-                      />
-                    </IconButton>
+                    ></IconButton>
                   </InputAdornment>
                 ),
               }}

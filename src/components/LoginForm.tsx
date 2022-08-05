@@ -1,24 +1,21 @@
 import React, { useState } from "react";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { Form, FormikProvider, useFormik } from "formik";
+import * as Yup from "yup";
+
 import {
   Box,
   Checkbox,
   FormControlLabel,
-  Icon,
   IconButton,
   InputAdornment,
   Link,
   Stack,
   TextField,
 } from "@mui/material";
-
 import { LoadingButton } from "@mui/lab";
-
-import { Form, FormikProvider, useFormik } from "formik";
+import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-import * as Yup from "yup";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -31,10 +28,10 @@ const animate = {
   },
 };
 
-const LoginForm = () => {
+const LoginForm = ({ setAuth }: any) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = "/";
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -45,7 +42,7 @@ const LoginForm = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const Formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
@@ -56,18 +53,18 @@ const LoginForm = () => {
       console.log("submitting...");
       setTimeout(() => {
         console.log("submited!!");
-        // setAuth(true);F
+        // setAuth(true);
         navigate(from, { replace: true });
       }, 2000);
     },
   });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
-    Formik;
+    formik;
 
   return (
-    <FormikProvider value={Formik}>
-      <Form>
+    <FormikProvider value={formik}>
+      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Box
           component={motion.div}
           animate={{
@@ -77,7 +74,11 @@ const LoginForm = () => {
           }}
         >
           <Box
-            sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
+            }}
             component={motion.div}
             initial={{ opacity: 0, y: 40 }}
             animate={animate}
@@ -99,14 +100,19 @@ const LoginForm = () => {
               label="Password"
               {...getFieldProps("password")}
               error={Boolean(touched.password && errors.password)}
-              helperText={touched.email && errors.email}
+              helperText={touched.password && errors.password}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
-                      onClick={() => setShowPassword((prev: boolean) => !prev)}
-                    ></IconButton>
-                    <RemoveRedEyeIcon />
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      {showPassword ? (
+                        <Icon icon="eva:eye-fill" />
+                      ) : (
+                        <Icon icon="eva:eye-off-fill" />
+                      )}
+                    </IconButton>
                   </InputAdornment>
                 ),
               }}
@@ -131,17 +137,19 @@ const LoginForm = () => {
                     checked={values.remember}
                   />
                 }
-                label="Remember Me"
+                label="Remember me"
               />
+
               <Link
                 component={RouterLink}
                 variant="subtitle2"
                 to="#"
                 underline="hover"
               >
-                Forgot Password
+                Forgot password?
               </Link>
             </Stack>
+
             <LoadingButton
               fullWidth
               size="large"
