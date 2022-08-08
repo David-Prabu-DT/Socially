@@ -3,15 +3,20 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
+import "./assets/App.css";
 
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Login />} />
+    <div className="App">
+      <div className="blur" style={{ top: "-18%", right: "0" }}></div>
+      <div className="blur" style={{ top: "36%", left: "-8rem" }}></div>
+
+      <Home />
+      {/* <Routes>
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/home" element={<Home />} />
-      </Routes>
+        <Route path="/" element={<Home />} />
+      </Routes> */}
     </div>
   );
 }

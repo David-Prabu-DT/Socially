@@ -1,6 +1,6 @@
 import { Avatar, Box, Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import LoginForm from "../../components/LoginForm";
+import LoginForm from "../../components/Auth/LoginForm";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Grid, Paper } from "@material-ui/core";
 import { useEffect } from "react";

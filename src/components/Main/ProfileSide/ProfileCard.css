@@ -1,0 +1,11 @@
+@import "../../../assets/App.css";
+
+.profileImg {
+  width: 6rem;
+  border-radius: 50%;
+  position: relative;
+  top: -3rem;
+  left: 36%;
+  /* box-shadow: 3px 3px 10px rgb(78, 76, 76); */
+  box-shadow: var(--profileShadow);
+}
