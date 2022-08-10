@@ -3,7 +3,8 @@ import { styled } from "@mui/material/styles";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import Paper from "@mui/material/Paper";
-import ProfileSide from "../../components/Main/ProfileSide";
+import ProfileSide from "../../components/Home/ProfileSide";
+import PostSide from "../../components/Home/PostSide";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -21,12 +22,12 @@ const Home = () => {
           <Grid item xs={3}>
             {/* Profile Side */}
             {/* <Item> */}
-              <ProfileSide />
+            <ProfileSide />
             {/* </Item> */}
           </Grid>
           <Grid item xs={6}>
             {/* Posts Side */}
-            <Item>Posts Side</Item>
+            <PostSide />
           </Grid>
           <Grid item xs={3}>
             {/* Right Side */}

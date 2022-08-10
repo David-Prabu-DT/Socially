@@ -1,6 +1,6 @@
 import "./ProfileCard.css";
-import Cover from "../../../assets/img/cover.jpg";
-import Avatar from "../../../assets/img/avatar.png";
+import Cover from "../../../../assets/img/cover.jpg";
+import Avatar from "../../../../assets/img/avatar.png";
 
 const ProfileCard = () => {
   const ProfilePage = true;

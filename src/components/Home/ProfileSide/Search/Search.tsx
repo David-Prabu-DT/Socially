@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import Logo from "../../../assets/img/logo.png";
+import Logo from "../../../../assets/img/logo.png";
 
 const Search = () => {
   return (
