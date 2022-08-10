@@ -1,8 +1,8 @@
-import Avatar from "../../../assets/img/avatar.png";
+import Img from "../assets/img/avatar.png";
 
 export const Followers = [
-  { name: "Andrew Thomas", username: "AndrewThomas", img: Avatar },
-  { name: "Hulk Buster", username: "HulkBuster", img: Avatar },
-  { name: "Thor", username: "ThunderMaster", img: Avatar },
-  { name: "Natasha", username: "Natasha", img: Avatar },
+  { name: "Andrew Thomas", username: "AndrewThomas", img: Img },
+  { name: "Hulk Buster", username: "HulkBuster", img: Img },
+  { name: "Thor", username: "ThunderMaster", img: Img },
+  { name: "Natasha", username: "Natasha", img: Img },
 ];

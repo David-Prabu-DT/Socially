@@ -1,22 +1,42 @@
 import React from "react";
-import { IconButton, TextField } from "@mui/material";
+import { Grid, IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Logo from "../../../assets/img/logo.png";
 
 const Search = () => {
   return (
     <div>
-      <img src={Logo} alt="" />
-      <TextField
-        label="Search Here"
-        InputProps={{
-          endAdornment: (
-            <IconButton>
-              <SearchIcon />
-            </IconButton>
-          ),
-        }}
-      />
+      <Grid container spacing={2} mb={2}>
+        <Grid
+          item
+          xs={2}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <img src={Logo} alt="" />
+        </Grid>
+        <Grid
+          item
+          xs={10}
+          display="flex"
+          justifyContent="end"
+          alignItems="center"
+        >
+          <TextField
+            label="Search Here"
+            variant="standard"
+            fullWidth
+            InputProps={{
+              endAdornment: (
+                <IconButton>
+                  <SearchIcon />
+                </IconButton>
+              ),
+            }}
+          />
+        </Grid>
+      </Grid>
     </div>
   );
 };
