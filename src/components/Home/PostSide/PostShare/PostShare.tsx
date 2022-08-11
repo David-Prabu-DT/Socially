@@ -1,12 +1,151 @@
-import { Grid, Paper } from "@mui/material";
-import React from "react";
+import { useRef, useState } from "react";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardMedia,
+  Grid,
+  Paper,
+  TextField,
+} from "@mui/material";
+import Avatar from "../../../../assets/img/avatar.png";
+import "./PostShare.module.css";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import VideoCallRoundedIcon from "@mui/icons-material/VideoCallRounded";
+import AddLocationRoundedIcon from "@mui/icons-material/AddLocationRounded";
+import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
+import SendIcon from "@mui/icons-material/Send";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const PostShare = () => {
+  const [image, setImage] = useState(null);
+  const imageRef = useRef();
+
+  const onImageChange = (e: EventTarget) => {
+    if (e.target.files && e.target.files[0]) {
+      let img: object = e.target.files[0];
+      setImage({
+        image: URL.createObjectURL(img),
+      });
+    }
+  };
+
   return (
     <div>
-      <Grid container>
-        <Paper elevation={2} style={{ margin: 5, padding: 5 }}></Paper>
-      </Grid>
+      <Paper elevation={2} style={{ margin: 5 }}>
+        <Grid container style={{ padding: 10 }}>
+          <Grid
+            item
+            xs={2}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <div className="ProfileImages">
+              <img style={{ width: "55%" }} src={Avatar} alt="" />
+            </div>
+          </Grid>
+          <Grid
+            item
+            xs={10}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <TextField
+              label="What's Happening"
+              variant="filled"
+              margin="dense"
+              fullWidth
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={1} pb={1}>
+          <Grid item xs={2}></Grid>
+          <Grid
+            item
+            xs={10}
+            display="flex"
+            justifyContent="space-around"
+            alignItems="center"
+          >
+            <Button
+              color="success"
+              aria-haspopup="true"
+              size="small"
+              startIcon={<AddAPhotoIcon fontSize="small" />}
+              onClick={() => imageRef.current.click()}
+            >
+              Photo
+            </Button>
+
+            <Button
+              color="secondary"
+              aria-haspopup="true"
+              size="small"
+              startIcon={<VideoCallRoundedIcon fontSize="small" />}
+            >
+              Video
+            </Button>
+
+            <Button
+              color="error"
+              aria-haspopup="true"
+              size="small"
+              startIcon={<AddLocationRoundedIcon fontSize="small" />}
+            >
+              Location
+            </Button>
+
+            <Button
+              color="warning"
+              aria-haspopup="true"
+              size="small"
+              startIcon={<EventAvailableRoundedIcon fontSize="small" />}
+            >
+              Schedule
+            </Button>
+
+            <Button
+              variant="contained"
+              color="warning"
+              size="small"
+              endIcon={<SendIcon fontSize="small" />}
+            >
+              Share
+            </Button>
+            <div style={{ display: "none" }}>
+              <input
+                type="file"
+                accept="image/*"
+                name="myImage"
+                ref={imageRef}
+                onChange={(e) => onImageChange(e)}
+              />
+            </div>
+          </Grid>
+        </Grid>
+
+        {image && (
+          <Card style={{ padding: 5 }}>
+            <CardHeader
+              action={
+                <CancelIcon onClick={() => setImage(null)} fontSize="medium" color="error" />
+              }
+              aria-label="settings"
+              title=""
+              subheader=""
+            />
+            <CardMedia
+              component="img"
+              height="auto"
+              width={400}
+              image={image.image}
+              alt="Paella dish"
+            />
+          </Card>
+        )}
+      </Paper>
     </div>
   );
 };

@@ -12,7 +12,7 @@ const FollowersCard = () => {
         {Followers.map((_follower, _id) => {
           return (
             <>
-              <Paper elevation={2} style={{ margin: 5, padding: 5 }}>
+              <Paper elevation={2} style={{ margin: 5, padding: 5 }} key={_id}>
                 <Grid container spacing={2}>
                   <Grid
                     item
