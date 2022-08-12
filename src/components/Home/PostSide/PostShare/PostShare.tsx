@@ -17,13 +17,18 @@ import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded
 import SendIcon from "@mui/icons-material/Send";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-const PostShare = () => {
-  const [image, setImage] = useState(null);
-  const imageRef = useRef();
+interface ImgBlob {
+  image?: Blob | string;
+}
 
-  const onImageChange = (e: EventTarget) => {
-    if (e.target.files && e.target.files[0]) {
-      let img: object = e.target.files[0];
+const PostShare = () => {
+  const [image, setImage] = useState<ImgBlob | null>(null);
+  const imageRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+
+  const onImageChange = (_event: React.ChangeEvent<HTMLInputElement>) => {
+    if (_event.target.files && _event.target.files[0]) {
+      let img: Blob | string = _event.target.files[0];
+
       setImage({
         image: URL.createObjectURL(img),
       });
@@ -112,7 +117,7 @@ const PostShare = () => {
               size="small"
               endIcon={<SendIcon fontSize="small" />}
             >
-              Share
+              Post
             </Button>
             <div style={{ display: "none" }}>
               <input
@@ -130,7 +135,11 @@ const PostShare = () => {
           <Card style={{ padding: 5 }}>
             <CardHeader
               action={
-                <CancelIcon onClick={() => setImage(null)} fontSize="medium" color="error" />
+                <CancelIcon
+                  onClick={() => setImage(null)}
+                  fontSize="medium"
+                  color="error"
+                />
               }
               aria-label="settings"
               title=""
@@ -138,9 +147,9 @@ const PostShare = () => {
             />
             <CardMedia
               component="img"
+              image={String(image?.image)}
               height="auto"
               width={400}
-              image={image.image}
               alt="Paella dish"
             />
           </Card>

@@ -1,9 +1,15 @@
 import React from "react";
 import { PostsData } from "../../../../Data/PostsData";
+import Post from "./Post";
+
 const Posts = () => {
-  return <div>{PostsData.map((_post, _id) => {
-   
-  })}</div>;
+  return (
+    <div style={{ height: "80vh", overflow: "scroll" }}>
+      {PostsData.map((_post, _id) => {
+        return <Post key={_id} data={_post} />;
+      })}
+    </div>
+  );
 };
 
 export default Posts;
