@@ -14,7 +14,7 @@ const Search = () => {
           justifyContent="center"
           alignItems="center"
         >
-          <img src={Logo} alt="" />
+          <img src={Logo} alt="" width={50} />
         </Grid>
         <Grid
           item
