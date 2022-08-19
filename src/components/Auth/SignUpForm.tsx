@@ -4,7 +4,6 @@ import { useFormik, Form, FormikProvider } from "formik";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
-  Icon,
   IconButton,
   InputAdornment,
   Stack,
@@ -28,7 +27,7 @@ const SignUpForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  const SignupSchema = Yup.object().shape({
+  const SignUpSchema = Yup.object().shape({
     firstName: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
@@ -50,12 +49,14 @@ const SignUpForm = () => {
       email: "",
       password: "",
     },
-    validationSchema: SignupSchema,
+    validationSchema: SignUpSchema,
     onSubmit: () => {
-      setTimeout(() => {
-        // setAuth(true);
-        navigate("/", { replace: true });
-      }, 2000);
+      console.log({ ...getFieldProps });
+
+      // setTimeout(() => {
+
+      //   navigate("/", { replace: true });
+      // }, 2000);
     },
   });
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = Formik;

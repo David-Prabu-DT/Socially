@@ -2,32 +2,14 @@ import { Avatar, Box, Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import LoginForm from "../../components/Auth/LoginForm";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Grid, Paper } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useEffect } from "react";
 
-let easing = [0.6, -0.05, 0.01, 0.99];
-const fadeInUp = {
-  initial: {
-    y: 60,
-    opacity: 0,
-    transition: { duration: 0.6, ease: easing },
-  },
-  animate: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: easing,
-    },
-  },
-};
-
 const Login = () => {
-
-  // useEffect(() => {
-  //   const color = Math.floor(Math.random() * 16777215).toString(16);
-  //   // document.body.style.background = `#${color}`;
-  // });
+  useEffect(() => {
+    // const color = Math.floor(Math.random() * 16777215).toString(16);
+    // document.body.style.background = `#${color}`;
+  });
   return (
     <Container maxWidth="sm">
       <Box
@@ -64,7 +46,7 @@ const Login = () => {
         <Grid container justifyContent="flex-end">
           <Grid item>
             <Typography mt={3} color="text.secondary">
-              Don't have account?<Link to="/signup"> Sign in</Link>
+              Don't have account? <Link to="/signup"> Sign in</Link>
             </Typography>
           </Grid>
         </Grid>
