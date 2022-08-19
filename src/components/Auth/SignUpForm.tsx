@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 import { useState } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
-import { useNavigate } from "react-router-dom";
 import {
   Box,
   IconButton,
@@ -24,7 +23,6 @@ const animate = {
 };
 
 const SignUpForm = () => {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const SignUpSchema = Yup.object().shape({

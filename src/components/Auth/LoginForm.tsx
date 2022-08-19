@@ -16,6 +16,8 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../actions/AuthAction";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -29,10 +31,10 @@ const animate = {
 };
 
 const LoginForm = ({ setAuth }: any) => {
-  const navigate = useNavigate();
-  const from = "/";
-
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const dispatch: any = useDispatch();
+  const from = "/";
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -41,7 +43,7 @@ const LoginForm = ({ setAuth }: any) => {
     password: Yup.string().required("Password is required"),
   });
 
-  const formik = useFormik({
+  const Formik = useFormik({
     initialValues: {
       email: "",
       password: "",
@@ -49,20 +51,19 @@ const LoginForm = ({ setAuth }: any) => {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      console.log("submitting...");
       setTimeout(() => {
-        console.log("submited!!");
-        // setAuth(true);
+        console.log("submitted!!");
+        dispatch(logIn(values));
         navigate(from, { replace: true });
       }, 2000);
     },
   });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
-    formik;
+    Formik;
 
   return (
-    <FormikProvider value={formik}>
+    <FormikProvider value={Formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Box
           component={motion.div}
