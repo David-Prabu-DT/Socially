@@ -1,22 +1,23 @@
-import {
-  legacy_createStore as createStore,
-  applyMiddleware,
-  compose,
-} from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
-import { PersistService } from "../services/PersistService";
-import { reducers } from "./reducers";
+import { AuthSlice } from "./slices/AuthSlice";
+import { ChatUserSlice } from "./slices/ChatUserSlice";
+import { PostSlice } from "./slices/PostSlice";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const persistedState = PersistService.loadPersistance();
-
-const store = createStore(
-  reducers,
-  persistedState,
-  composeEnhancers(applyMiddleware(thunk))
-);
-
-store.subscribe(() => PersistService.savePersistance(store.getState()));
+const store = configureStore({
+  reducer: {
+    auth: AuthSlice.reducer,
+    chatUser: ChatUserSlice.reducer,
+    post: PostSlice.reducer
+  },
+})
 
 export default store;
+
+export const authActions = AuthSlice.actions;
+export const chatUserActions = ChatUserSlice.actions;
+export const postActions = PostSlice.actions;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

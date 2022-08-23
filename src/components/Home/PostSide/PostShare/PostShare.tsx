@@ -147,7 +147,7 @@ const PostShare = () => {
             />
             <CardMedia
               component="img"
-              image={String(image?.image)}
+              image={String(image.image)}
               height="auto"
               width={400}
               alt="Paella dish"

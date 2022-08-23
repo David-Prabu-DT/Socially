@@ -32,11 +32,7 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
           <CardHeader
             avatar={
               <Avatar sx={{ bgColor: "red" }} aria-label="recipe">
-                {data.profile !== "" ? (
-                  <img src={data.profile} alt="" />
-                ) : (
-                  data.name?.charAt(0)
-                )}
+                {data.profile !== "" ? <img src={data.profile} alt="" /> : ""}
               </Avatar>
             }
             action={

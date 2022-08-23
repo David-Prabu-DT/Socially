@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-
+import { LoadingButton } from "@mui/lab";
+import { Icon } from "@iconify/react";
+import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/ReduxStore";
+import { logIn } from "../../actions/AuthActions";
 import {
   Box,
   Checkbox,
@@ -13,11 +18,6 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import { Icon } from "@iconify/react";
-import { motion } from "framer-motion";
-import { useDispatch } from "react-redux";
-import { logIn } from "../../actions/AuthAction";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -33,8 +33,7 @@ const animate = {
 const LoginForm = ({ setAuth }: any) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const dispatch: any = useDispatch();
-  const from = "/";
+  const dispatch: AppDispatch = useDispatch();
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -53,8 +52,7 @@ const LoginForm = ({ setAuth }: any) => {
     onSubmit: () => {
       setTimeout(() => {
         console.log("submitted!!");
-        dispatch(logIn(values));
-        navigate(from, { replace: true });
+        dispatch(logIn(values, navigate));
       }, 2000);
     },
   });
