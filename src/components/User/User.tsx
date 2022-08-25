@@ -5,9 +5,7 @@ import { AppDispatch, RootState } from "../../store/ReduxStore";
 
 const User = ({ person }) => {
   const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
-  const { user } = useSelector(
-    (state: RootState) => state.authReducer.authData
-  );
+  const user: any = useSelector((state: RootState) => state.auth.authData);
   const dispatch: AppDispatch = useDispatch();
   const [following, setFollowing] = useState<object>(
     person.followers.includes(user._id)

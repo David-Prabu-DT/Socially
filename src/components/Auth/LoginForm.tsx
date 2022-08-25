@@ -10,8 +10,6 @@ import { AppDispatch } from "../../store/ReduxStore";
 import { logIn } from "../../actions/AuthActions";
 import {
   Box,
-  Checkbox,
-  FormControlLabel,
   IconButton,
   InputAdornment,
   Link,
@@ -36,17 +34,14 @@ const LoginForm = ({ setAuth }: any) => {
   const dispatch: AppDispatch = useDispatch();
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Provide a valid email address")
-      .required("Email is required"),
+    username: Yup.string().required("User Name is required"),
     password: Yup.string().required("Password is required"),
   });
 
   const Formik = useFormik({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
-      remember: true,
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
@@ -84,11 +79,11 @@ const LoginForm = ({ setAuth }: any) => {
             <TextField
               fullWidth
               autoComplete="username"
-              type="email"
-              label="Email Address"
-              {...getFieldProps("email")}
-              error={Boolean(touched.email && errors.email)}
-              helperText={touched.email && errors.email}
+              type="text"
+              label="User Name"
+              {...getFieldProps("username")}
+              error={Boolean(touched.username && errors.username)}
+              helperText={touched.username && errors.username}
             />
 
             <TextField
@@ -128,16 +123,6 @@ const LoginForm = ({ setAuth }: any) => {
               justifyContent="space-between"
               sx={{ my: 2 }}
             >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    {...getFieldProps("remember")}
-                    checked={values.remember}
-                  />
-                }
-                label="Remember me"
-              />
-
               <Link
                 component={RouterLink}
                 variant="subtitle2"

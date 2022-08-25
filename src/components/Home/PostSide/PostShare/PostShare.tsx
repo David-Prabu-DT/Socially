@@ -1,3 +1,4 @@
+import React, { FormEvent } from "react";
 import { useRef, useState } from "react";
 import {
   Button,
@@ -8,7 +9,6 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
-import Avatar from "../../../../assets/img/avatar.png";
 import "./PostShare.module.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import VideoCallRoundedIcon from "@mui/icons-material/VideoCallRounded";
@@ -16,14 +16,23 @@ import AddLocationRoundedIcon from "@mui/icons-material/AddLocationRounded";
 import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
 import SendIcon from "@mui/icons-material/Send";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../store/ReduxStore";
+import { uploadPost, uploadImage } from "../../../../actions/UploadAction";
 
 interface ImgBlob {
-  image?: Blob | string;
+  image?: string;
 }
 
 const PostShare = () => {
-  const [image, setImage] = useState<ImgBlob | null>(null);
+  const [image, setImage] = useState<ImgBlob | null | any>(null);
   const imageRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+
+  const dispatch: AppDispatch = useDispatch();
+  const user: any = useSelector((state: RootState) => state.auth.authData);
+  const loading = useSelector((state: RootState) => state.post.uploading);
+  const desc = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const onImageChange = (_event: React.ChangeEvent<HTMLInputElement>) => {
     if (_event.target.files && _event.target.files[0]) {
@@ -33,6 +42,41 @@ const PostShare = () => {
         image: URL.createObjectURL(img),
       });
     }
+  };
+
+  // handle post upload
+  const handleUpload = async (e: FormEvent) => {
+    e.preventDefault();
+
+    //post data
+    const newPost: any = {
+      userId: user._id,
+      // desc: desc.current.value,
+      image: "",
+    };
+
+    // if there is an image with post
+    if (image) {
+      const data: HTMLFormElement | any = new FormData();
+      const fileName = Date.now() + image.name;
+      data.append("name", fileName);
+      data.append("file", image);
+      newPost.image = fileName;
+      console.log(newPost);
+      try {
+        dispatch(uploadImage(data));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    dispatch(uploadPost(newPost));
+    resetShare();
+  };
+
+  // Reset Post Share
+  const resetShare = () => {
+    setImage(null);
+    // desc.current.value = "";
   };
 
   return (
@@ -47,7 +91,15 @@ const PostShare = () => {
             alignItems="center"
           >
             <div className="ProfileImages">
-              <img style={{ width: "55%" }} src={Avatar} alt="" />
+              <img
+                src={
+                  user.profilePicture
+                    ? serverPublic + user.profilePicture
+                    : serverPublic + "defaultProfile.png"
+                }
+                alt="Profile"
+                style={{ width: "55%" }}
+              />
             </div>
           </Grid>
           <Grid
@@ -116,8 +168,10 @@ const PostShare = () => {
               color="warning"
               size="small"
               endIcon={<SendIcon fontSize="small" />}
+              onClick={handleUpload}
+              disabled={loading}
             >
-              Post
+              {loading ? "Uploading" : "Post"}
             </Button>
             <div style={{ display: "none" }}>
               <input

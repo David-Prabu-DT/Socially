@@ -4,6 +4,7 @@ import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
 import SpeakerNotesTwoToneIcon from "@mui/icons-material/SpeakerNotesTwoTone";
+import { Link } from "react-router-dom";
 
 const RightNavbar = () => {
   return (
@@ -13,9 +14,11 @@ const RightNavbar = () => {
         justifyContent="space-between"
         m={1}
       >
-        <IconButton>
-          <HomeTwoToneIcon color="warning" />
-        </IconButton>
+        <Link to="/home">
+          <IconButton>
+            <HomeTwoToneIcon color="warning" />
+          </IconButton>
+        </Link>
         <IconButton>
           <SettingsTwoToneIcon />
         </IconButton>
@@ -24,9 +27,11 @@ const RightNavbar = () => {
             <NotificationsNoneTwoToneIcon />
           </Badge>
         </IconButton>
-        <IconButton>
-          <SpeakerNotesTwoToneIcon />
-        </IconButton>
+        <Link to="/chat">
+          <IconButton>
+            <SpeakerNotesTwoToneIcon />
+          </IconButton>
+        </Link>
       </Box>
     </div>
   );

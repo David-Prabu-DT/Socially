@@ -1,33 +1,47 @@
+import React from "react";
 import "./ProfileCard.css";
-import Cover from "../../../../assets/img/cover.jpg";
-import Avatar from "../../../../assets/img/avatar.png";
-import { Paper } from "@mui/material";
+import { Button, Paper } from "@mui/material";
+import { RootState } from "../../../../store/ReduxStore";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
 
-const ProfileCard = () => {
-  const ProfilePage = true;
+const ProfileCard = ({ location }) => {
+  const user: any = useSelector((state: RootState) => state.auth.authData);
+  const posts: any = useSelector((state: RootState) => state.post.posts);
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+  const ProfilePage = location === "profilePage";
   return (
     <div>
       <Paper elevation={2} style={{ margin: 5 }}>
         <div className="ProfileImages">
-          <img src={Cover} alt="" />
-          <img src={Avatar} alt="" />
+          <img
+            src={
+              user.coverPicture
+                ? serverPublic + user.coverPicture
+                : serverPublic + "defaultCover.jpg"
+            }
+            alt="CoverImage"
+          />
         </div>
 
         <div className="ProfileName">
-          <span>Zendaya MJ</span>
-          <span>Senior UI/UX Designer</span>
+          <span>
+            {user.firstname} {user.lastname}
+          </span>
+          <span>{user.worksAt ? user.worksAt : "Write about yourself"}</span>
         </div>
 
         <div className="followStatus">
           <hr />
           <div>
             <div className="follow">
-              <span>6,890</span>
+              <span>{user.following.length}</span>
               <span>Followings</span>
             </div>
             <div className="vl"></div>
             <div className="follow">
-              <span>1</span>
+              <span>{user.followers.length}</span>
               <span>Followers</span>
             </div>
 
@@ -35,7 +49,9 @@ const ProfileCard = () => {
               <>
                 <div className="vl"></div>
                 <div className="follow">
-                  <span>3</span>
+                  <span>
+                    {posts.filter((post) => post.userId === user._id).length}
+                  </span>
                   <span>Posts</span>
                 </div>
               </>
@@ -43,7 +59,21 @@ const ProfileCard = () => {
           </div>
           <hr />
         </div>
-        {ProfilePage ? "" : <span>My Profile</span>}
+        {ProfilePage || (
+          <Link
+            to={`/profile/${user._id}`}
+            style={{ textDecoration: "none", color: "inherit", paddingTop: 5 }}
+          >
+            <Button
+              variant="text"
+              color="secondary"
+              startIcon={<PersonOutlineTwoToneIcon />}
+              fullWidth
+            >
+              My Profile
+            </Button>
+          </Link>
+        )}
       </Paper>
     </div>
   );

@@ -11,6 +11,10 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { LoadingButton } from "@mui/lab";
+import { signUp } from "../../actions/AuthActions";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "../../store/ReduxStore";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -25,40 +29,39 @@ const animate = {
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
 
   const SignUpSchema = Yup.object().shape({
-    firstName: Yup.string()
+    firstname: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("First name required"),
-    lastName: Yup.string()
+    lastname: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Last name required"),
-    email: Yup.string()
-      .email("Email must be a valid email address")
-      .required("Email is required"),
+    username: Yup.string().required("User Name is required"),
     password: Yup.string().required("Password is required"),
   });
 
   const Formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
+      firstname: "",
+      lastname: "",
+      username: "",
       password: "",
     },
     validationSchema: SignUpSchema,
     onSubmit: () => {
       console.log({ ...getFieldProps });
-
-      // setTimeout(() => {
-
-      //   navigate("/", { replace: true });
-      // }, 2000);
+      setTimeout(() => {
+        dispatch(signUp(values, navigate));
+      }, 2000);
     },
   });
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = Formik;
+  const { errors, touched, values, handleSubmit, isSubmitting, getFieldProps } =
+    Formik;
   return (
     <FormikProvider value={Formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -73,17 +76,17 @@ const SignUpForm = () => {
             <TextField
               fullWidth
               label="First name"
-              {...getFieldProps("firstName")}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
+              {...getFieldProps("firstname")}
+              error={Boolean(touched.firstname && errors.firstname)}
+              helperText={touched.firstname && errors.firstname}
             />
 
             <TextField
               fullWidth
               label="Last name"
-              {...getFieldProps("lastName")}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
+              {...getFieldProps("lastname")}
+              error={Boolean(touched.lastname && errors.lastname)}
+              helperText={touched.lastname && errors.lastname}
             />
           </Stack>
 
@@ -96,11 +99,11 @@ const SignUpForm = () => {
             <TextField
               fullWidth
               autoComplete="username"
-              type="email"
-              label="Email address"
-              {...getFieldProps("email")}
-              error={Boolean(touched.email && errors.email)}
-              helperText={touched.email && errors.email}
+              type="text"
+              label="User Name"
+              {...getFieldProps("username")}
+              error={Boolean(touched.username && errors.username)}
+              helperText={touched.username && errors.username}
             />
 
             <TextField

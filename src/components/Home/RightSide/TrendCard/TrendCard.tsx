@@ -1,12 +1,11 @@
+import React from "react";
 import {
   Card,
   CardContent,
   CardHeader,
   Typography,
-  Button,
 } from "@mui/material";
 import { TrendsData } from "../../../../Data/TrendsData";
-import ShareTwoToneIcon from "@mui/icons-material/ShareTwoTone";
 const TrendCard = () => {
   return (
     <div>
@@ -28,15 +27,6 @@ const TrendCard = () => {
           })}
         </CardContent>
       </Card>
-      <Button
-        variant="contained"
-        color="secondary"
-        startIcon={<ShareTwoToneIcon />}
-        style={{ marginTop: 25 }}
-        fullWidth
-      >
-        Share
-      </Button>
     </div>
   );
 };

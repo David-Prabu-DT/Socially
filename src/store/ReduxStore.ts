@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import thunk from "redux-thunk";
 import { AuthSlice } from "./slices/AuthSlice";
 import { ChatUserSlice } from "./slices/ChatUserSlice";
 import { PostSlice } from "./slices/PostSlice";

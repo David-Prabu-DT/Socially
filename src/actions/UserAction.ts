@@ -1,5 +1,5 @@
 import * as UserApi from "../api/UserRequests";
-import { AppDispatch } from "../store/ReduxStore";
+import { AppDispatch, authActions } from "../store/ReduxStore";
 interface signUpType {
     firstName?: string;
     lastName?: string;
@@ -7,25 +7,37 @@ interface signUpType {
     password?: string | number;
 }
 
-export const updateUser = (id: string | number, formData: signUpType) => async (dispatch: AppDispatch) => {
-    dispatch({ type: "UPDATING_START" })
-    try {
-        const { data } = await UserApi.updateUser(id, formData);
-        console.log("Action ko receive hoa hy ye : ", data)
-        dispatch({ type: "UPDATING_SUCCESS", data: data })
-    }
-    catch (error) {
-        dispatch({ type: "UPDATING_FAIL" })
-    }
-}
+const {
+    UPDATING_START,
+    UPDATING_SUCCESS,
+    UPDATING_FAIL,
+    FOLLOW_USER,
+    UN_FOLLOW_USER,
+} = authActions;
 
+export const updateUser =
+    (id: string | number, formData: signUpType) =>
+        async (dispatch: AppDispatch) => {
+            dispatch(UPDATING_START);
+            try {
+                const { data } = await UserApi.updateUser(id, formData);
+                console.log("Action ko receive hoa hy ye : ", data);
+                dispatch(UPDATING_SUCCESS(data));
+            } catch (error) {
+                dispatch(UPDATING_FAIL);
+            }
+        };
 
-export const followUser = <T>(id: string | number, data: T) => async (dispatch: AppDispatch) => {
-    dispatch({ type: "FOLLOW_USER", data: id })
-    UserApi.followUser(id, data)
-}
+export const followUser =
+    <T>(id: string | number, data: T) =>
+        async (dispatch: AppDispatch) => {
+            dispatch(FOLLOW_USER(id));
+            UserApi.followUser(id, data);
+        };
 
-export const unFollowUser = <T>(id: string | number, data: T) => async (dispatch: AppDispatch) => {
-    dispatch({ type: "unFollow_USER", data: id })
-    UserApi.unFollowUser(id, data)
-}
+export const unFollowUser =
+    <T>(id: string | number, data: T) =>
+        async (dispatch: AppDispatch) => {
+            dispatch(UN_FOLLOW_USER(id));
+            UserApi.unFollowUser(id, data);
+        };

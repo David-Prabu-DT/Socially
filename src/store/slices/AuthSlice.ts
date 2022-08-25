@@ -15,11 +15,11 @@ export const AuthSlice = createSlice({
          return { ..._state, loading: true, error: false };
       },
       AUTH_SUCCESS: (_state, action: any) => {
-         console.log(action.data);
+         console.log(action.payload.user);
 
-         localStorage.setItem("profile", JSON.stringify({ ...action.data }));
+         localStorage.setItem("profile", JSON.stringify({ ...action.payload.user }));
 
-         return { ..._state, authData: action.data, loading: false, error: false };
+         return { ..._state, authData: action.payload.user, loading: false, error: false };
       },
       AUTH_FAIL: (_state, action) => {
          return { ..._state, loading: false, error: true };
@@ -61,7 +61,7 @@ export const AuthSlice = createSlice({
             },
          };
       },
-      UN_FOLLOW_USER: (_state) => { }
+      UN_FOLLOW_USER: (_state, action: any) => { }
    }
 
 })

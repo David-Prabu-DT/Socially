@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Avatar,
   Card,
@@ -13,18 +14,30 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { RootState } from "../../../../store/ReduxStore";
+import { likePost } from "../../../../api/PostsRequests";
 
 interface PostData {
-  img?: string;
+  _id: number | string;
+  image?: string;
   profile?: string;
   name?: string;
   date?: string;
   desc?: string;
-  likes?: number;
+  likes?: string;
   liked?: boolean;
 }
 
 const Post: React.FC<{ data: PostData }> = ({ data }) => {
+  const user: any = useSelector((state: RootState) => state.auth.authData);
+  const [liked, setLiked] = useState(data?.likes?.includes(user._id));
+  const [likes, setLikes] = useState(data?.likes?.length || 0);
+
+  const handleLike = () => {
+    likePost(data._id, user._id);
+    setLiked((prev) => !prev);
+    liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
+  };
   return (
     <div>
       <Paper elevation={2} style={{ margin: 5 }}>
@@ -32,7 +45,14 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
           <CardHeader
             avatar={
               <Avatar sx={{ bgColor: "red" }} aria-label="recipe">
-                {data.profile !== "" ? <img src={data.profile} alt="" /> : ""}
+                <img
+                  src={
+                    data.image
+                      ? process.env.REACT_APP_PUBLIC_FOLDER + data.image
+                      : ""
+                  }
+                  alt=""
+                />
               </Avatar>
             }
             action={
@@ -46,20 +66,27 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
           <CardMedia
             component="img"
             height="300"
-            image={data.img}
+            image={data.image}
             alt={data.name}
           />
 
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
-              {data.liked ? (
-                <FavoriteBorderIcon />
+              {liked ? (
+                <FavoriteBorderIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={handleLike}
+                />
               ) : (
-                <FavoriteIcon color="error" />
+                <FavoriteIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={handleLike}
+                  color="error"
+                />
               )}
               &nbsp;
               <Typography variant="body2" color="text.secondary">
-                {data.likes}
+                {likes} likes
               </Typography>
             </IconButton>
             <IconButton aria-label="add Comment">

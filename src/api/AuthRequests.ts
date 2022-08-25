@@ -15,7 +15,7 @@ interface signUpType {
 // ==== Type Area
 
 
-const API = axios.create({ baseURL: 'http://localhost:5000' });
+const API = axios.create({ baseURL: process.env.BASE_URL });
 
 export const logIn = (formData: logInType) => API.post('/auth/login', formData);
 
