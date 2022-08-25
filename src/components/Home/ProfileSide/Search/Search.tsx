@@ -1,9 +1,10 @@
 import React from "react";
 import { Grid, IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import Logo from "../../../../assets/img/logo.png";
+
 
 const Search = () => {
+  const imageSrc = process.env.REACT_APP_IMAGE_FOLDER;
   return (
     <div>
       <Grid container spacing={2} mb={2}>
@@ -14,7 +15,7 @@ const Search = () => {
           justifyContent="center"
           alignItems="center"
         >
-          <img src={Logo} alt="" width={50} />
+          <img src={`${imageSrc}logo.png`} alt="" width={50} />
         </Grid>
         <Grid
           item

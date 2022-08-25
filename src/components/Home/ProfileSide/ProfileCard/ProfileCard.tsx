@@ -23,6 +23,15 @@ const ProfileCard = ({ location }) => {
             }
             alt="CoverImage"
           />
+          <img
+            src={
+              user.profilePicture
+                ? serverPublic + user.profilePicture
+                : serverPublic + "defaultProfile.png"
+            }
+            alt="Profile"
+            style={{ width: "20%" }}
+          />
         </div>
 
         <div className="ProfileName">
