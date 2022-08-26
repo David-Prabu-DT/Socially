@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useEffect } from "react";
 import { useRef, useState } from "react";
 import {
   Button,
@@ -31,16 +31,13 @@ const PostShare = () => {
   const dispatch: AppDispatch = useDispatch();
   const user: any = useSelector((state: RootState) => state.auth.authData);
   const loading = useSelector((state: RootState) => state.post.uploading);
-  // const desc = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const [desc, setDesc] = useState("");
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const onImageChange = (_event: React.ChangeEvent<HTMLInputElement>) => {
     if (_event.target.files && _event.target.files[0]) {
       let img: Blob | string = _event.target.files[0];
-
-      setImage({
-        image: URL.createObjectURL(img),
-      });
+      setImage(img);
     }
   };
 
@@ -51,8 +48,7 @@ const PostShare = () => {
     //post data
     const newPost: any = {
       userId: user._id,
-      // desc: desc.current.value,
-      image: "",
+      desc: desc,
     };
 
     // if there is an image with post
@@ -69,6 +65,7 @@ const PostShare = () => {
         console.log(err);
       }
     }
+    console.log(newPost);
     dispatch(uploadPost(newPost));
     resetShare();
   };
@@ -76,7 +73,7 @@ const PostShare = () => {
   // Reset Post Share
   const resetShare = () => {
     setImage(null);
-    // desc.current.value = "";
+    setDesc("");
   };
 
   return (
@@ -114,6 +111,8 @@ const PostShare = () => {
               variant="filled"
               margin="dense"
               fullWidth
+              required
+              onChange={(e: any) => setDesc(e.target.value)}
             />
           </Grid>
         </Grid>
@@ -201,7 +200,7 @@ const PostShare = () => {
             />
             <CardMedia
               component="img"
-              image={String(image.image)}
+              image={URL.createObjectURL(image)}
               height="auto"
               width={400}
               alt="Paella dish"
