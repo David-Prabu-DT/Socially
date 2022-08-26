@@ -1,10 +1,10 @@
 import React from "react";
 import { Avatar, Box, Container, Typography } from "@mui/material";
-import LoginForm from "../../components/Auth/LoginForm";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Grid } from "@material-ui/core";
 import { useState } from "react";
-import SignUpForm from "../../components/Auth/SignUpForm";
+import LoginForm from "../../components/Auth/Login/LoginForm";
+import SignUpForm from "../../components/Auth/SignUp/SignUpForm";
 
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);

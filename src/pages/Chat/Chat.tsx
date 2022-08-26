@@ -1,20 +1,17 @@
 import React, { useRef, useState } from "react";
-import ChatBox from "../../components/ChatBox/ChatBox";
-import Conversation from "../../components/Conversation/Conversation";
-import LogoSearch from "../../components/LogoSearch/LogoSearch";
-import NavIcons from "../../components/NavIcons/NavIcons";
+import ChatBox from "../../components/Chat/ChatBox/ChatBox";
+import Conversation from "../../components/Chat/Conversation/Conversation";
+import LogoSearch from "../../components/Common/LogoSearch/LogoSearch";
+import NavIcons from "../../components/Common/NavIcons/NavIcons";
 import "./Chat.css";
 import { useEffect } from "react";
 import { userChats } from "../../api/ChatRequests";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import { AppDispatch } from "../../store/ReduxStore";
-import { RootState } from "../../store/ReduxStore";
 
 const Chat = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const socket = useRef();
-  const { user } = useSelector((state: any) => state);
+  const socket: any = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const user: any = useSelector((state: any) => state);
 
   const [chats, setChats] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);

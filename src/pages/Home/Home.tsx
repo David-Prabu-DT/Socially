@@ -12,9 +12,7 @@ const Home = () => {
         <Grid container spacing={1}>
           <Grid item xs={3}>
             {/* Profile Side */}
-            {/* <Item> */}
             <ProfileSide />
-            {/* </Item> */}
           </Grid>
           <Grid item xs={6}>
             {/* Posts Side */}

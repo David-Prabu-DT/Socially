@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import RightNavbar from "./RightNavbar/RightNavbar";
-import ShareModal from "./ShareModal/ShareModal";
-import TrendCard from "./TrendCard/TrendCard";
+import RightNavbar from "../../Common/RightNavbar/RightNavbar";
+import TrendCard from "../../Common/TrendCard/TrendCard";
+import ShareModal from "../../Modals/ShareModal/ShareModal";
 import Button from "@mui/material/Button";
 import ShareTwoToneIcon from "@mui/icons-material/ShareTwoTone";
 

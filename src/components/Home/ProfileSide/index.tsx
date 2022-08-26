@@ -1,14 +1,14 @@
 import React from "react";
-import FollowersCard from "./FollowersCard/FollowersCard";
-import ProfileCard from "./ProfileCard/ProfileCard";
-import Search from "./Search/Search";
+import FollowersCard from "../../Common/FollowersCard/FollowersCard";
+import ProfileCard from "../../Common/ProfileCard/ProfileCard";
+import Search from "../../Common/Search/Search";
 
 const ProfileSide = () => {
   return (
     <div>
       <Search />
       <ProfileCard location="homepage" />
-      <FollowersCard />
+      <FollowersCard location="homepage" />
     </div>
   );
 };

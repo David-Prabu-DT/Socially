@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import "./assets/App.css";
+import "./App.css";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/ReduxStore";
 import Home from "./pages/Home/Home";
@@ -10,8 +10,6 @@ import Chat from "./pages/Chat/Chat";
 
 const App = () => {
   const user = useSelector((state: RootState) => state.auth.authData);
-
-  console.log(user);
 
   return (
     <div

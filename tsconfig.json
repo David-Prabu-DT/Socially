@@ -19,5 +19,5 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
-  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "src/components/Home/PostSide/Posts/Posts.tsx"]
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "src/components/Home/components/Posts/Posts.tsx"]
 }
