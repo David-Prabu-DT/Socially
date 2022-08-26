@@ -39,16 +39,7 @@ export const AuthSlice = createSlice({
       UPDATING_FAIL: (_state, action) => {
          return { ..._state, updateLoading: true, error: true };
       },
-      LOG_OUT: (_state, action) => {
-         localStorage.clear();
-         return {
-            ..._state,
-            authData: null,
-            loading: false,
-            error: false,
-            updateLoading: false,
-         };
-      },
+
       FOLLOW_USER: (_state: any, action: any) => {
          return {
             ..._state,
@@ -61,7 +52,17 @@ export const AuthSlice = createSlice({
             },
          };
       },
-      UN_FOLLOW_USER: (_state, action: any) => { }
+      UN_FOLLOW_USER: (_state, action: any) => { },
+      LOG_OUT: (_state) => {
+         localStorage.clear();
+         return {
+            ..._state,
+            authData: null,
+            loading: false,
+            error: false,
+            updateLoading: false,
+         };
+      },
    }
 
 })

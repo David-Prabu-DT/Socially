@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/ReduxStore";
 import { logIn } from "../../../actions/AuthActions";
 import {
+  Alert,
   Box,
   IconButton,
   InputAdornment,
@@ -29,14 +30,29 @@ const animate = {
 };
 
 const LoginForm = ({ setAuth }: any) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState<Boolean>(false);
+  const [open, setOpen] = useState<Boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState("");
+  // const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
   const LoginSchema = Yup.object().shape({
     username: Yup.string().required("User Name is required"),
     password: Yup.string().required("Password is required"),
   });
+
+  const responseHandler = (res) => {
+    setOpen(true);
+    setLoading(false);
+    setAlert(res.response.data);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setOpen(false);
+    }, 2000);
+  }, [alert, open]);
 
   const Formik = useFormik({
     initialValues: {
@@ -45,107 +61,114 @@ const LoginForm = ({ setAuth }: any) => {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
+      setLoading(true);
       setTimeout(() => {
-        console.log("submitted!!");
-        dispatch(logIn(values, navigate));
+        dispatch(logIn(values, responseHandler));
       }, 2000);
     },
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
-    Formik;
+  const { errors, touched, values, handleSubmit, getFieldProps } = Formik;
 
   return (
-    <FormikProvider value={Formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Box
-          component={motion.div}
-          animate={{
-            transition: {
-              staggerChildren: 0.55,
-            },
-          }}
-        >
+    <>
+      <FormikProvider value={Formik}>
+        <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
+            component={motion.div}
+            animate={{
+              transition: {
+                staggerChildren: 0.55,
+              },
             }}
-            component={motion.div}
-            initial={{ opacity: 0, y: 40 }}
-            animate={animate}
           >
-            <TextField
-              fullWidth
-              autoComplete="username"
-              type="text"
-              label="User Name"
-              {...getFieldProps("username")}
-              error={Boolean(touched.username && errors.username)}
-              helperText={touched.username && errors.username}
-            />
-
-            <TextField
-              fullWidth
-              autoComplete="current-password"
-              type={showPassword ? "text" : "password"}
-              label="Password"
-              {...getFieldProps("password")}
-              error={Boolean(touched.password && errors.password)}
-              helperText={touched.password && errors.password}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowPassword((prev) => !prev)}
-                    >
-                      {showPassword ? (
-                        <Icon icon="eva:eye-fill" />
-                      ) : (
-                        <Icon icon="eva:eye-off-fill" />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 3,
               }}
-            />
-          </Box>
-
-          <Box
-            component={motion.div}
-            initial={{ opacity: 0, y: 20 }}
-            animate={animate}
-          >
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ my: 2 }}
+              component={motion.div}
+              initial={{ opacity: 0, y: 40 }}
+              animate={animate}
             >
-              <Link
-                component={RouterLink}
-                variant="subtitle2"
-                to="#"
-                underline="hover"
+              <TextField
+                fullWidth
+                autoComplete="username"
+                type="text"
+                label="User Name"
+                {...getFieldProps("username")}
+                error={Boolean(touched.username && errors.username)}
+                helperText={touched.username && errors.username}
+              />
+
+              <TextField
+                fullWidth
+                autoComplete="current-password"
+                type={showPassword ? "text" : "password"}
+                label="Password"
+                {...getFieldProps("password")}
+                error={Boolean(touched.password && errors.password)}
+                helperText={touched.password && errors.password}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <Icon icon="eva:eye-fill" />
+                        ) : (
+                          <Icon icon="eva:eye-off-fill" />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
+
+            <Box
+              component={motion.div}
+              initial={{ opacity: 0, y: 20 }}
+              animate={animate}
+            >
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                sx={{ my: 2 }}
               >
-                Forgot password?
-              </Link>
-            </Stack>
+                <Link
+                  component={RouterLink}
+                  variant="subtitle2"
+                  to="#"
+                  underline="hover"
+                >
+                  Forgot password?
+                </Link>
+              </Stack>
 
-            <LoadingButton
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
-            >
-              {isSubmitting ? "loading..." : "Login"}
-            </LoadingButton>
+              <LoadingButton
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+                loading={loading}
+              >
+                {loading ? "loading..." : "Login"}
+              </LoadingButton>
+            </Box>
           </Box>
-        </Box>
-      </Form>
-    </FormikProvider>
+        </Form>
+      </FormikProvider>
+
+      {open && (
+        <Alert style={{ marginTop: 10 }} severity="error">
+          {alert}
+        </Alert>
+      )}
+    </>
   );
 };
 

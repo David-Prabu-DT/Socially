@@ -1,3 +1,4 @@
+import { Avatar, Button, Grid, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { followUser, unFollowUser } from "../../../actions/UserAction";
@@ -17,30 +18,57 @@ const User = ({ person }) => {
     setFollowing((prev) => !prev);
   };
   return (
-    <div className="follower">
-      <div>
-        <img
-          src={
-            publicFolder + person.profilePicture
-              ? publicFolder + person.profilePicture
-              : publicFolder + "defaultProfile.png"
-          }
-          alt="profile"
-          className="followerImage"
-        />
-        <div className="name">
-          <span>{person.firstname}</span>
-          <span>@{person.username}</span>
-        </div>
-      </div>
-      <button
-        className={
-          following ? "button fc-button unFollowButton" : "button fc-button"
-        }
-        onClick={handleFollow}
-      >
-        {following ? "unFollow" : "Follow"}
-      </button>
+    <div>
+      <Paper elevation={2} style={{ margin: 5, padding: 5 }}>
+        <Grid container spacing={2}>
+          <Grid
+            item
+            xs={4}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Avatar
+              src={
+                publicFolder + person.profilePicture
+                  ? publicFolder + person.profilePicture
+                  : publicFolder + "defaultProfile.png"
+              }
+            />
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            display="flex"
+            justifyContent="left"
+            alignItems="center"
+          >
+            <Typography variant="body2" gutterBottom>
+              {person.firstname}
+            </Typography>
+            &nbsp;
+            <Typography variant="caption" display="block" gutterBottom>
+              @{person.username}
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            display="flex"
+            justifyContent="end"
+            alignItems="center"
+          >
+            <Button
+              variant="contained"
+              color={following ? "success" : "warning"}
+              size="small"
+              onClick={handleFollow}
+            >
+              {following ? "unFollow" : "Follow"}
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
     </div>
   );
 };

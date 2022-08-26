@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { useState } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import {
+  Alert,
   Box,
   IconButton,
   InputAdornment,
@@ -54,97 +55,98 @@ const SignUpForm = () => {
     },
     validationSchema: SignUpSchema,
     onSubmit: () => {
-      console.log({ ...getFieldProps });
-      setTimeout(() => {
-        dispatch(signUp(values, navigate));
-      }, 2000);
+      dispatch(signUp(values, navigate));
     },
   });
   const { errors, touched, values, handleSubmit, isSubmitting, getFieldProps } =
     Formik;
   return (
-    <FormikProvider value={Formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack spacing={3}>
-          <Stack
-            component={motion.div}
-            initial={{ opacity: 0, y: 60 }}
-            animate={animate}
-            direction={{ xs: "column", sm: "row" }}
-            spacing={2}
-          >
-            <TextField
-              fullWidth
-              label="First name"
-              {...getFieldProps("firstname")}
-              error={Boolean(touched.firstname && errors.firstname)}
-              helperText={touched.firstname && errors.firstname}
-            />
-
-            <TextField
-              fullWidth
-              label="Last name"
-              {...getFieldProps("lastname")}
-              error={Boolean(touched.lastname && errors.lastname)}
-              helperText={touched.lastname && errors.lastname}
-            />
-          </Stack>
-
-          <Stack
-            spacing={3}
-            component={motion.div}
-            initial={{ opacity: 0, y: 40 }}
-            animate={animate}
-          >
-            <TextField
-              fullWidth
-              autoComplete="username"
-              type="text"
-              label="User Name"
-              {...getFieldProps("username")}
-              error={Boolean(touched.username && errors.username)}
-              helperText={touched.username && errors.username}
-            />
-
-            <TextField
-              fullWidth
-              autoComplete="current-password"
-              type={showPassword ? "text" : "password"}
-              label="Password"
-              {...getFieldProps("password")}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      edge="end"
-                      onClick={() => setShowPassword((prev) => !prev)}
-                    ></IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              error={Boolean(touched.password && errors.password)}
-              helperText={touched.password && errors.password}
-            />
-          </Stack>
-
-          <Box
-            component={motion.div}
-            initial={{ opacity: 0, y: 20 }}
-            animate={animate}
-          >
-            <LoadingButton
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
+    <>
+      <FormikProvider value={Formik}>
+        <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+          <Stack spacing={3}>
+            <Stack
+              component={motion.div}
+              initial={{ opacity: 0, y: 60 }}
+              animate={animate}
+              direction={{ xs: "column", sm: "row" }}
+              spacing={2}
             >
-              Sign up
-            </LoadingButton>
-          </Box>
-        </Stack>
-      </Form>
-    </FormikProvider>
+              <TextField
+                fullWidth
+                label="First name"
+                {...getFieldProps("firstname")}
+                error={Boolean(touched.firstname && errors.firstname)}
+                helperText={touched.firstname && errors.firstname}
+              />
+
+              <TextField
+                fullWidth
+                label="Last name"
+                {...getFieldProps("lastname")}
+                error={Boolean(touched.lastname && errors.lastname)}
+                helperText={touched.lastname && errors.lastname}
+              />
+            </Stack>
+
+            <Stack
+              spacing={3}
+              component={motion.div}
+              initial={{ opacity: 0, y: 40 }}
+              animate={animate}
+            >
+              <TextField
+                fullWidth
+                autoComplete="username"
+                type="text"
+                label="User Name"
+                {...getFieldProps("username")}
+                error={Boolean(touched.username && errors.username)}
+                helperText={touched.username && errors.username}
+              />
+
+              <TextField
+                fullWidth
+                autoComplete="current-password"
+                type={showPassword ? "text" : "password"}
+                label="Password"
+                {...getFieldProps("password")}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      ></IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                error={Boolean(touched.password && errors.password)}
+                helperText={touched.password && errors.password}
+              />
+            </Stack>
+
+            <Box
+              component={motion.div}
+              initial={{ opacity: 0, y: 20 }}
+              animate={animate}
+            >
+              <LoadingButton
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+                loading={isSubmitting}
+              >
+                Sign up
+              </LoadingButton>
+            </Box>
+          </Stack>
+        </Form>
+      </FormikProvider>
+      <br />
+      <Alert severity="success">This is an error message!</Alert>
+    </>
   );
 };
 

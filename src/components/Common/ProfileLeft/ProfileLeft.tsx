@@ -8,7 +8,7 @@ const ProfileLeft = () => {
     <div>
       <Search />
       <ProfileInfoCard />
-      <FollowersCard location="profile" />
+      <FollowersCard location="profilePage" />
     </div>
   );
 };

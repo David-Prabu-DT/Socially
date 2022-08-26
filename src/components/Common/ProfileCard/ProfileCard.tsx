@@ -76,7 +76,7 @@ const ProfileCard = ({ location }) => {
             style={{ textDecoration: "none", color: "inherit", paddingTop: 5 }}
           >
             <Button
-              variant="outlined"
+              variant="contained"
               color="secondary"
               startIcon={<PersonOutlineTwoToneIcon />}
               fullWidth

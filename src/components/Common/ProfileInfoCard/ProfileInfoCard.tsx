@@ -6,9 +6,8 @@ import ProfileModal from "../../Modals/ProfileModal/ProfileModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as UserApi from "../../../api/UserRequests";
-import { logout } from "../../../actions/AuthActions";
 import { AppDispatch, RootState } from "../../../store/ReduxStore";
-import { Button, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 
 const ProfileInfoCard = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -17,10 +16,6 @@ const ProfileInfoCard = () => {
   const profileUserId: number = Number(params.id);
   const [profileUser, setProfileUser] = useState<any>({});
   const user: any = useSelector((state: RootState) => state.auth.authData);
-
-  const handleLogOut = () => {
-    dispatch(logout());
-  };
 
   useEffect(() => {
     const fetchProfileUser = async () => {
@@ -69,15 +64,15 @@ const ProfileInfoCard = () => {
         <Typography variant="subtitle2" gutterBottom>
           <strong>Works At : </strong> {profileUser.worksAt ?? "-"}
         </Typography>
-        <hr />
-        <Button
+        {/* <hr /> */}
+        {/* <Button
           variant="contained"
           color="error"
           fullWidth
           onClick={handleLogOut}
         >
           Log Out
-        </Button>
+        </Button> */}
       </Paper>
     </div>
   );

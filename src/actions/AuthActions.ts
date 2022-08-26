@@ -16,10 +16,10 @@ interface signUpType {
 }
 // ==== Type Area
 
-const { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOG_OUT } = authActions;
+const { AUTH_START, AUTH_SUCCESS, AUTH_FAIL } = authActions;
 
 export const logIn =
-  (formData: logInType, navigate: object | any) =>
+  (formData: logInType, responseHandler: object | any) =>
     async (dispatch: AppDispatch) => {
       dispatch(AUTH_START);
       try {
@@ -28,9 +28,10 @@ export const logIn =
         console.log(data);
 
         dispatch(AUTH_SUCCESS(data));
-        navigate("/home", { replace: true });
+        responseHandler(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        responseHandler(error);
         dispatch(AUTH_FAIL);
       }
     };
@@ -49,6 +50,3 @@ export const signUp =
       }
     };
 
-export const logout = () => async (dispatch: AppDispatch) => {
-  dispatch(LOG_OUT);
-};
