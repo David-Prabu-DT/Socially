@@ -32,43 +32,46 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
   const user: any = useSelector((state: RootState) => state.auth.authData);
   const [liked, setLiked] = useState(data?.likes?.includes(user._id));
   const [likes, setLikes] = useState(data?.likes?.length || 0);
+  const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const handleLike = () => {
     likePost(data._id, user._id);
     setLiked((prev) => !prev);
     liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
   };
+
+  console.log(data);
+
   return (
     <div>
       <Paper elevation={2} style={{ margin: 5 }}>
         <Card>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgColor: "red" }} aria-label="recipe">
-                <img
-                  src={
-                    data.image
-                      ? process.env.REACT_APP_PUBLIC_FOLDER + data.image
-                      : ""
-                  }
-                  alt=""
-                />
-              </Avatar>
+              <Avatar
+                src={
+                  data.image
+                    ? publicFolder + data.image
+                    : publicFolder + "defaultProfile.png"
+                }
+              />
             }
             action={
               <IconButton aria-label="settings">
                 {/* <MoreVertIcon /> */}
               </IconButton>
             }
-            title={data.name}
-            subheader={data.date}
+            title={data.name ?? "User Name"}
+            subheader={data.createdAt}
           />
-          <CardMedia
-            component="img"
-            height="300"
-            image={data.image}
-            alt={data.name}
-          />
+          {data.image && (
+            <CardMedia
+              component="img"
+              height="300"
+              image={publicFolder + data.image}
+              alt={data.name}
+            />
+          )}
 
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">

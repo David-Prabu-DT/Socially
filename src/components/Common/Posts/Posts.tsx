@@ -12,6 +12,7 @@ const Posts: any = () => {
   const dispatch: AppDispatch = useDispatch();
   const user: any = useSelector((state: RootState) => state.auth.authData);
   let { posts, loading } = useSelector((state: RootState | any) => state.post);
+  console.log(posts);
 
   interface PostData {
     _id: number | string;
@@ -42,7 +43,7 @@ const Posts: any = () => {
             No Posts Yet !
           </Alert>
         ) : (
-          loading &&
+          !loading &&
           posts.map((post: PostData, id: number) => {
             return <Post data={post} key={id} />;
           })

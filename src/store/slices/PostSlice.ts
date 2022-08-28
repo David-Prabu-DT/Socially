@@ -12,7 +12,7 @@ export const PostSlice = createSlice({
       UPLOAD_SUCCESS: (_state: any, action: any) => {
          return {
             ..._state,
-            posts: [action.data, ..._state.posts],
+            posts: [action.payload, ..._state.posts],
             uploading: false,
             error: false,
          };
@@ -24,7 +24,8 @@ export const PostSlice = createSlice({
          return { ..._state, loading: true, error: false };
       },
       RETRIEVING_SUCCESS: (_state, action: any) => {
-         return { ..._state, posts: action.data, loading: false, error: false };
+         // console.log(action.payload);
+         return { ..._state, posts: action.payload, loading: false, error: false };
 
       },
       RETRIEVING_FAIL: (_state, action: any) => {

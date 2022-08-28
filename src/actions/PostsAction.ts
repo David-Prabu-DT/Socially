@@ -8,6 +8,7 @@ export const getTimelinePosts =
     dispatch(RETRIEVING_START);
     try {
       const { data } = await PostsApi.getTimelinePosts(id);
+      // console.log(data);
       dispatch(RETRIEVING_SUCCESS(data));
     } catch (error) {
       console.log(error);

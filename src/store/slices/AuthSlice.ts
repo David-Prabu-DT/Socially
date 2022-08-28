@@ -15,7 +15,7 @@ export const AuthSlice = createSlice({
          return { ..._state, loading: true, error: false };
       },
       AUTH_SUCCESS: (_state, action: any) => {
-         console.log(action.payload.user);
+         // console.log(action.payload.user);
 
          localStorage.setItem("profile", JSON.stringify({ ...action.payload.user }));
 
@@ -28,10 +28,10 @@ export const AuthSlice = createSlice({
          return { ..._state, updateLoading: true, error: false };
       },
       UPDATING_SUCCESS: (_state, action: any) => {
-         localStorage.setItem("profile", JSON.stringify({ ...action.data }));
+         localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
          return {
             ..._state,
-            authData: action.data,
+            authData: action.payload,
             updateLoading: false,
             error: false,
          };
@@ -47,7 +47,7 @@ export const AuthSlice = createSlice({
                ..._state.authData,
                user: {
                   ..._state.authData.user,
-                  following: [..._state.authData.user.following, action.data],
+                  following: [..._state.authData.user.following, action.payload],
                },
             },
          };

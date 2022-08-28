@@ -7,7 +7,7 @@ export const ChatUserSlice = createSlice({
    initialState: initialState,
    reducers: {
       SAVE_USER: (_state: any, action: any) => {
-         return ({ ..._state, chatUsers: [..._state.chatUsers, action.data] });
+         return ({ ..._state, chatUsers: [..._state.chatUsers, action.payload] });
 
       }
    }
