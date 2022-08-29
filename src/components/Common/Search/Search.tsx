@@ -1,10 +1,11 @@
 import React from "react";
-import { Grid, IconButton, TextField } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-
+import { Grid, Typography } from "@mui/material";
+// import SearchIcon from "@mui/icons-material/Search";
 
 const Search = () => {
-  const imageSrc = process.env.REACT_APP_IMAGE_FOLDER;
+  // const imageSrc = process.env.REACT_APP_IMAGE_FOLDER;
+
+  const imageSrc = `${window.location.origin}/images/`;
   return (
     <div>
       <Grid container spacing={2} mb={2}>
@@ -21,10 +22,14 @@ const Search = () => {
           item
           xs={10}
           display="flex"
-          justifyContent="end"
+          
           alignItems="center"
         >
-          <TextField
+          <Typography variant="h4" color="cadetblue">
+            Socially
+          </Typography>
+
+          {/* <TextField
             label="Search Here"
             variant="standard"
             fullWidth
@@ -35,7 +40,7 @@ const Search = () => {
                 </IconButton>
               ),
             }}
-          />
+          /> */}
         </Grid>
       </Grid>
     </div>

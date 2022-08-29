@@ -1,14 +1,22 @@
-import React from "react";
-import FollowersCard from "../../Common/FollowersCard/FollowersCard";
+import { CircularProgress } from "@mui/material";
+import React, { Suspense } from "react";
 import ProfileCard from "../../Common/ProfileCard/ProfileCard";
-import Search from "../../Common/Search/Search";
+
+const Search = React.lazy(() => import("../../Common/Search/Search"));
+const FollowersCard = React.lazy(
+  () => import("../../Common/FollowersCard/FollowersCard")
+);
 
 const ProfileSide = () => {
   return (
     <div>
-      <Search />
+      <Suspense fallback={<CircularProgress />}>
+        <Search />
+      </Suspense>
       <ProfileCard location="homepage" />
-      <FollowersCard location="homepage" />
+      <Suspense fallback={<CircularProgress />}>
+        <FollowersCard location="homepage" />
+      </Suspense>
     </div>
   );
 };

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
+/* eslint-disable array-callback-return */
+import React, { Suspense, useEffect, useState } from "react";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { getAllUser } from "../../../api/UserRequests";
 import { RootState } from "../../../store/ReduxStore";
 import FollowersModal from "../../Modals/FollowersModal/FollowersModal";
-import User from "../User/User";
+const User = React.lazy(() => import("../User/User"));
 
 const FollowersCard = ({ location }) => {
   const [modalOpened, setModalOpened] = useState(false);
@@ -36,13 +37,16 @@ const FollowersCard = ({ location }) => {
             </Button>
           </Typography>
         )}
-
-        <div style={{ height: cardHeight, overflow: "scroll" }}>
-          {persons.map((person: any, id) => {
-            if (person._id !== user._id)
-              return <User person={person} key={id} />;
-          })}
-        </div>
+        <Suspense fallback={<CircularProgress style={{ display: "flex" }} />}>
+          <div style={{ height: cardHeight, overflow: "scroll" }}>
+            {persons.map((person: any, id) => {
+              if (person._id !== user._id)
+                return (
+                  <User person={person} followers={person.followers} key={id} />
+                );
+            })}
+          </div>
+        </Suspense>
       </div>
       <FollowersModal
         modalOpened={modalOpened}

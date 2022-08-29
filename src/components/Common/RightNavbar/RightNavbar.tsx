@@ -1,38 +1,43 @@
 import React from "react";
 import { Badge, Box, Button, IconButton, Tooltip } from "@mui/material";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
-import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
+import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
 import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
 import SpeakerNotesTwoToneIcon from "@mui/icons-material/SpeakerNotesTwoTone";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch, authActions } from "../../../store/ReduxStore";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, authActions, RootState } from "../../../store/ReduxStore";
 
 const RightNavbar = () => {
+  const user: any = useSelector((state: RootState) => state.auth.authData);
   const dispatch: AppDispatch = useDispatch();
   const handleLogOut = () => {
     dispatch(authActions.LOG_OUT());
   };
+  // const homePage: string =
+  //   window.location.pathname === "/home" ? "warning" : "";
 
   return (
     <div>
       <Box
-        sx={{ display: { xs: "none", md: "flex" } }}
+        sx={{ display: { xs: "flex", md: "flex" } }}
         justifyContent="space-between"
         m={1}
       >
         <Tooltip title="Home" arrow>
           <Link to="/home">
-            <IconButton>
-              <HomeTwoToneIcon color="warning" />
+            <IconButton color="warning">
+              <HomeTwoToneIcon />
             </IconButton>
           </Link>
         </Tooltip>
 
-        <Tooltip title="Settings" arrow>
-          <IconButton>
-            <SettingsTwoToneIcon />
-          </IconButton>
+        <Tooltip title="Profile" arrow>
+          <Link to={`/profile/${user._id}`}>
+            <IconButton>
+              <PersonOutlineTwoToneIcon />
+            </IconButton>
+          </Link>
         </Tooltip>
 
         <Tooltip title="Notifications" arrow>

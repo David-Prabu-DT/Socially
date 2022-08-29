@@ -1,11 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
    authData: null,
    loading: false,
    error: false,
    updateLoading: false,
-}
+};
 
 export const AuthSlice = createSlice({
    name: "auth",
@@ -17,9 +17,17 @@ export const AuthSlice = createSlice({
       AUTH_SUCCESS: (_state, action: any) => {
          // console.log(action.payload.user);
 
-         localStorage.setItem("profile", JSON.stringify({ ...action.payload.user }));
+         localStorage.setItem(
+            "profile",
+            JSON.stringify({ ...action.payload.user })
+         );
 
-         return { ..._state, authData: action.payload.user, loading: false, error: false };
+         return {
+            ..._state,
+            authData: action.payload.user,
+            loading: false,
+            error: false,
+         };
       },
       AUTH_FAIL: (_state, action) => {
          return { ..._state, loading: false, error: true };
@@ -44,15 +52,23 @@ export const AuthSlice = createSlice({
          return {
             ..._state,
             authData: {
-               ..._state.authData,
-               user: {
-                  ..._state.authData.user,
-                  following: [..._state.authData.user.following, action.payload],
-               },
+               ..._state?.authData,
+               following: [..._state?.authData?.following, action.payload],
             },
          };
       },
-      UN_FOLLOW_USER: (_state, action: any) => { },
+      UN_FOLLOW_USER: (_state: any, action: any) => {
+
+         return {
+            ..._state,
+            authData: {
+               ..._state?.authData,
+               following: [..._state?.authData?.following.filter(
+                  (personId: number) => personId !== action.payload
+               )],
+            },
+         };
+      },
       LOG_OUT: (_state) => {
          localStorage.clear();
          return {
@@ -63,6 +79,5 @@ export const AuthSlice = createSlice({
             updateLoading: false,
          };
       },
-   }
-
-})
+   },
+});

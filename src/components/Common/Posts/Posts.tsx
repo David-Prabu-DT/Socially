@@ -12,7 +12,6 @@ const Posts: any = () => {
   const dispatch: AppDispatch = useDispatch();
   const user: any = useSelector((state: RootState) => state.auth.authData);
   let { posts, loading } = useSelector((state: RootState | any) => state.post);
-  console.log(posts);
 
   interface PostData {
     _id: number | string;

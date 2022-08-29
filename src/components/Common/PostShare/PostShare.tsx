@@ -135,7 +135,7 @@ const PostShare = () => {
               Photo
             </Button>
 
-            <Button
+            {/* <Button
               color="secondary"
               aria-haspopup="true"
               size="small"
@@ -160,7 +160,7 @@ const PostShare = () => {
               startIcon={<EventAvailableRoundedIcon fontSize="small" />}
             >
               Schedule
-            </Button>
+            </Button> */}
 
             <Button
               variant="contained"

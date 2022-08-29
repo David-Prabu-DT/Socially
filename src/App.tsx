@@ -11,7 +11,7 @@ import Chat from "./pages/Chat/Chat";
 const App = () => {
   const user = useSelector((state: RootState) => state.auth.authData);
 
-  console.log(user);
+
 
   return (
     <div
