@@ -35,7 +35,7 @@ const Posts: any = () => {
 
   return (
     <>
-      <div style={{ height: "80vh", overflow: "scroll" }}>
+      <div style={{ height: "75vh", overflow: "scroll" }}>
         {!posts ? (
           <Alert variant="outlined" severity="info">
             <AlertTitle>Info</AlertTitle>

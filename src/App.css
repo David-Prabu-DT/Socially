@@ -13,6 +13,9 @@
   --location: #ef5757;
   --schedule: #e1ae4a;
 }
+body{
+  background-color: #ebebeb;
+}
 
 .App {
   overflow: hidden;

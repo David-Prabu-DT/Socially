@@ -7,7 +7,7 @@ const TrendCard = () => {
 
   return (
     <div>
-      <Card style={{ marginTop: 25 }}>
+      <Card elevation={0} style={{ marginTop: 25 }}>
         <CardHeader center title="Trends For You !!" />
         <CardContent>
           {TrendData.map((_data, _id) => {

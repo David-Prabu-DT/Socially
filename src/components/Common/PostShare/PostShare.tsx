@@ -1,6 +1,7 @@
 import React, { FormEvent, useEffect } from "react";
 import { useRef, useState } from "react";
 import {
+  Box,
   Button,
   Card,
   CardHeader,
@@ -78,64 +79,65 @@ const PostShare = () => {
 
   return (
     <div>
-      <Paper elevation={2} style={{ margin: 5 }}>
-        <Grid container style={{ padding: 10 }}>
-          <Grid
-            item
-            xs={2}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div className="ProfileImages">
-              <img
-                src={
-                  user.profilePicture
-                    ? serverPublic + user.profilePicture
-                    : serverPublic + "defaultProfile.png"
-                }
-                alt="Profile"
-                style={{ width: "55%" }}
-              />
-            </div>
-          </Grid>
-          <Grid
-            item
-            xs={10}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <TextField
-              label="What's Happening"
-              variant="filled"
-              margin="dense"
-              fullWidth
-              required
-              onChange={(e: any) => setDesc(e.target.value)}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={1} pb={1}>
-          <Grid item xs={2}></Grid>
-          <Grid
-            item
-            xs={10}
-            display="flex"
-            justifyContent="space-around"
-            alignItems="center"
-          >
-            <Button
-              color="success"
-              aria-haspopup="true"
-              size="small"
-              startIcon={<AddAPhotoIcon fontSize="small" />}
-              onClick={() => imageRef.current.click()}
+      <Box>
+        <Paper elevation={0} style={{ margin: 5 }}>
+          <Grid container style={{ padding: 10 }}>
+            <Grid
+              item
+              md={2}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
             >
-              Photo
-            </Button>
+              <div className="ProfileImages">
+                <img
+                  src={
+                    user.profilePicture
+                      ? serverPublic + user.profilePicture
+                      : serverPublic + "defaultProfile.png"
+                  }
+                  alt="Profile"
+                  style={{ width: "55%" }}
+                />
+              </div>
+            </Grid>
+            <Grid
+              item
+              md={10}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <TextField
+                label="What's Happening"
+                variant="filled"
+                margin="dense"
+                fullWidth
+                required
+                onChange={(e: any) => setDesc(e.target.value)}
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={1} pb={1}>
+            <Grid item xs={2}></Grid>
+            <Grid
+              item
+              xs={10}
+              display="flex"
+              justifyContent="space-around"
+              alignItems="center"
+            >
+              <Button
+                color="success"
+                aria-haspopup="true"
+                size="small"
+                startIcon={<AddAPhotoIcon fontSize="small" />}
+                onClick={() => imageRef.current.click()}
+              >
+                Photo
+              </Button>
 
-            {/* <Button
+              {/* <Button
               color="secondary"
               aria-haspopup="true"
               size="small"
@@ -162,52 +164,53 @@ const PostShare = () => {
               Schedule
             </Button> */}
 
-            <Button
-              variant="contained"
-              color="warning"
-              size="small"
-              endIcon={<SendIcon fontSize="small" />}
-              onClick={handleUpload}
-              disabled={loading}
-            >
-              {loading ? "Uploading" : "Post"}
-            </Button>
-            <div style={{ display: "none" }}>
-              <input
-                type="file"
-                accept="image/*"
-                name="myImage"
-                ref={imageRef}
-                onChange={(e) => onImageChange(e)}
-              />
-            </div>
-          </Grid>
-        </Grid>
-
-        {image && (
-          <Card style={{ padding: 5 }}>
-            <CardHeader
-              action={
-                <CancelIcon
-                  onClick={() => setImage(null)}
-                  fontSize="medium"
-                  color="error"
+              <Button
+                variant="contained"
+                color="warning"
+                size="small"
+                endIcon={<SendIcon fontSize="small" />}
+                onClick={handleUpload}
+                disabled={loading}
+              >
+                {loading ? "Uploading" : "Post"}
+              </Button>
+              <div style={{ display: "none" }}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="myImage"
+                  ref={imageRef}
+                  onChange={(e) => onImageChange(e)}
                 />
-              }
-              aria-label="settings"
-              title=""
-              subheader=""
-            />
-            <CardMedia
-              component="img"
-              image={URL.createObjectURL(image)}
-              height="auto"
-              width={400}
-              alt="Paella dish"
-            />
-          </Card>
-        )}
-      </Paper>
+              </div>
+            </Grid>
+          </Grid>
+
+          {image && (
+            <Card style={{ padding: 5 }}>
+              <CardHeader
+                action={
+                  <CancelIcon
+                    onClick={() => setImage(null)}
+                    fontSize="medium"
+                    color="error"
+                  />
+                }
+                aria-label="settings"
+                title=""
+                subheader=""
+              />
+              <CardMedia
+                component="img"
+                image={URL.createObjectURL(image)}
+                height="auto"
+                width={400}
+                alt="Paella dish"
+              />
+            </Card>
+          )}
+        </Paper>
+      </Box>
     </div>
   );
 };

@@ -33,7 +33,7 @@ const ProfileInfoCard = () => {
 
   return (
     <div>
-      <Paper elevation={2} style={{ padding: 5 }}>
+      <Paper elevation={0} style={{ padding: 5 }}>
         <Typography variant="subtitle1" gutterBottom>
           Profile Info
         </Typography>

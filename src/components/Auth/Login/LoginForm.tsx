@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
@@ -33,7 +33,7 @@ const LoginForm = ({ setAuth }: any) => {
   const [showPassword, setShowPassword] = useState<Boolean>(false);
   const [open, setOpen] = useState<Boolean>(false);
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState("");
+  const [alert, setAlert] = useState<string>("");
   // const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
@@ -42,7 +42,7 @@ const LoginForm = ({ setAuth }: any) => {
     password: Yup.string().required("Password is required"),
   });
 
-  const responseHandler = (res) => {
+  const responseHandler = (res: object | any) => {
     setOpen(true);
     setLoading(false);
     setAlert(res.response.data);

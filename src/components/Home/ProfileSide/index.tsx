@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import React, { Suspense } from "react";
 import ProfileCard from "../../Common/ProfileCard/ProfileCard";
 
@@ -10,13 +10,15 @@ const FollowersCard = React.lazy(
 const ProfileSide = () => {
   return (
     <div>
-      <Suspense fallback={<CircularProgress />}>
-        <Search />
-      </Suspense>
-      <ProfileCard location="homepage" />
-      <Suspense fallback={<CircularProgress />}>
-        <FollowersCard location="homepage" />
-      </Suspense>
+      <Box sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
+        <Suspense fallback={<CircularProgress />}>
+          <Search />
+        </Suspense>
+        <ProfileCard location="homepage" />
+        <Suspense fallback={<CircularProgress />}>
+          <FollowersCard location="homepage" />
+        </Suspense>
+      </Box>
     </div>
   );
 };

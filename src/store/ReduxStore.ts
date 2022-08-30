@@ -4,7 +4,8 @@ import { ChatUserSlice } from "./slices/ChatUserSlice";
 import { PostSlice } from "./slices/PostSlice";
 import storage from 'redux-persist/lib/storage/session';
 import { persistReducer, persistStore } from 'redux-persist';
-import thunk from "redux-thunk";
+
+// import thunk from "redux-thunk"; /* using async actions */  
 
 const persistConfig = {
   key: 'root',
@@ -21,7 +22,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: [thunk]
+  // middleware: [thunk]
 
 })
 

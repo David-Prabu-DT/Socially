@@ -12,8 +12,7 @@ const User = ({ person, followers }: any) => {
     person.followers.includes(user._id)
   );
 
-  console.log(followers[0], user._id);
-
+ 
   const handleFollow = useCallback(async () => {
     dispatch(
       following ? unFollowUser(person._id, user) : followUser(person?._id, user)
@@ -24,7 +23,7 @@ const User = ({ person, followers }: any) => {
 
   return (
     <div>
-      <Paper elevation={2} style={{ margin: 5, padding: 5 }}>
+      <Paper elevation={0} style={{ margin: 5, padding: 5 }}>
         <Grid container spacing={2}>
           <Grid
             item

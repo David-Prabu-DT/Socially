@@ -43,8 +43,8 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
 
   return (
     <div>
-      <Paper elevation={2} style={{ margin: 5 }}>
-        <Card>
+      <div style={{ margin: 5 }}>
+        <Card elevation={0}>
           <CardHeader
             avatar={
               <Avatar
@@ -66,8 +66,7 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
                 ?.slice(0, data?.createdAt?.indexOf("T"))
                 .split("-")
                 .reverse()
-                .join("-") 
-                ?? ""
+                .join("-") ?? ""
             }
           />
           {data.image && (
@@ -114,7 +113,7 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
             </Typography>
           </CardActions>
         </Card>
-      </Paper>
+      </div>
     </div>
   );
 };
