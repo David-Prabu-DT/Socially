@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { userChats } from "../../api/ChatRequests";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
+import Search from "../../components/Common/Search/Search";
 
 const Chat = () => {
   const socket: any = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -67,7 +68,7 @@ const Chat = () => {
     <div className="Chat">
       {/* Left Side */}
       <div className="Left-side-chat">
-        <LogoSearch />
+        <Search />
         <div className="Chat-container">
           <h2>Chats</h2>
           <div className="Chat-list">
@@ -78,7 +79,7 @@ const Chat = () => {
                 }}
               >
                 <Conversation
-                  data={chat}
+                  data={chat ?? ""}
                   currentUser={user._id}
                   online={checkOnlineStatus(chat)}
                 />

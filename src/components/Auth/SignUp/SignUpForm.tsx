@@ -29,7 +29,7 @@ const animate = {
 };
 
 const SignUpForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<Boolean>(false);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 

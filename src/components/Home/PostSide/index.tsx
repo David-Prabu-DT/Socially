@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import Posts from "../../Common/Posts/Posts";
+import React, { Suspense, useState } from "react";
 import ShareModal from "../../Modals/ShareModal/ShareModal";
 import Button from "@mui/material/Button";
 import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone";
+import { CircularProgress } from "@mui/material";
+
+const Posts = React.lazy(() => import("../../Common/Posts/Posts"));
 
 const PostSide = () => {
   const [modalOpened, setModalOpened] = useState<Boolean>(false);
@@ -19,8 +21,9 @@ const PostSide = () => {
       >
         New Post
       </Button>
-
-      <Posts />
+      <Suspense fallback={<CircularProgress style={{ display: "flex" }} />}>
+        <Posts />
+      </Suspense>
       <ShareModal modalOpened={modalOpened} setModalOpened={setModalOpened} />
     </div>
   );

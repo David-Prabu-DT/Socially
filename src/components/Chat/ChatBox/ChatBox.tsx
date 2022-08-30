@@ -81,7 +81,7 @@ const ChatBox = ({
     if (receivedMessage !== null && receivedMessage.chatId === chat._id) {
       setMessages([...messages, receivedMessage]);
     }
-  }, [chat._id, messages, receivedMessage]);
+  }, [chat?._id, messages, receivedMessage]);
 
   const scroll = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imageRef = useRef() as React.MutableRefObject<HTMLInputElement>;

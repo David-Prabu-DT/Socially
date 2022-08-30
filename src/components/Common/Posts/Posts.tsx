@@ -12,7 +12,6 @@ const Posts: any = () => {
   const dispatch: AppDispatch = useDispatch();
   const user: any = useSelector((state: RootState) => state.auth.authData);
   let { posts, loading } = useSelector((state: RootState | any) => state.post);
-  console.log(posts);
 
   interface PostData {
     _id: number | string;
@@ -36,7 +35,7 @@ const Posts: any = () => {
 
   return (
     <>
-      <div style={{ height: "80vh", overflow: "scroll" }}>
+      <div style={{ height: "75vh", overflow: "scroll" }}>
         {!posts ? (
           <Alert variant="outlined" severity="info">
             <AlertTitle>Info</AlertTitle>

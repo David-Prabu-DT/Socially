@@ -34,11 +34,11 @@ const App = () => {
         />
         <Route
           path="/auth"
-          element={user ? <Navigate to="../home" /> : <Auth />}
+          element={user ? <Navigate to="/home" /> : <Auth />}
         />
         <Route
           path="/profile/:id"
-          element={user ? <Profile /> : <Navigate to="../auth" />}
+          element={user ? <Profile /> : <Navigate to="/auth" />}
         />
         <Route
           path="*"
@@ -51,7 +51,7 @@ const App = () => {
 
         <Route
           path="/chat"
-          element={user ? <Chat /> : <Navigate to="../auth" />}
+          element={user ? <Chat /> : <Navigate to="/auth" />}
         />
       </Routes>
     </div>

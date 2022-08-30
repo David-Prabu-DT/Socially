@@ -13,7 +13,7 @@ const ProfileCard = ({ location }) => {
   const ProfilePage = location === "profilePage";
   return (
     <div>
-      <Paper elevation={2} style={{ padding: 5 }}>
+      <Paper elevation={0} style={{ padding: 5 }}>
         <div className="ProfileImages">
           <img
             src={

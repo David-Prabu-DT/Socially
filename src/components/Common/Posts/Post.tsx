@@ -26,6 +26,7 @@ interface PostData {
   desc?: string;
   likes?: string;
   liked?: boolean;
+  createdAt?: string;
 }
 
 const Post: React.FC<{ data: PostData }> = ({ data }) => {
@@ -40,12 +41,10 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
     liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
   };
 
-  console.log(data);
-
   return (
     <div>
-      <Paper elevation={2} style={{ margin: 5 }}>
-        <Card>
+      <div style={{ margin: 5 }}>
+        <Card elevation={0}>
           <CardHeader
             avatar={
               <Avatar
@@ -62,7 +61,13 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
               </IconButton>
             }
             title={data.name ?? "User Name"}
-            subheader={data.createdAt}
+            subheader={
+              data?.createdAt
+                ?.slice(0, data?.createdAt?.indexOf("T"))
+                .split("-")
+                .reverse()
+                .join("-") ?? ""
+            }
           />
           {data.image && (
             <CardMedia
@@ -76,15 +81,15 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
               {liked ? (
-                <FavoriteBorderIcon
-                  style={{ cursor: "pointer" }}
-                  onClick={handleLike}
-                />
-              ) : (
                 <FavoriteIcon
                   style={{ cursor: "pointer" }}
                   onClick={handleLike}
                   color="error"
+                />
+              ) : (
+                <FavoriteBorderIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={handleLike}
                 />
               )}
               &nbsp;
@@ -108,7 +113,7 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
             </Typography>
           </CardActions>
         </Card>
-      </Paper>
+      </div>
     </div>
   );
 };
