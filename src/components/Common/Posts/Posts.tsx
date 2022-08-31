@@ -2,28 +2,16 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import Post from "./Post";
-
 import { getTimelinePosts } from "../../../actions/PostsAction";
 import { AppDispatch, RootState } from "../../../store/ReduxStore";
 import { Alert, AlertTitle } from "@mui/material";
+import { postDataType } from "../../../types/Global";
 
-const Posts: any = () => {
+const Posts = () => {
   const params = useParams();
   const dispatch: AppDispatch = useDispatch();
   const user: any = useSelector((state: RootState) => state.auth.authData);
-  let { posts, loading } = useSelector((state: RootState | any) => state.post);
-
-  interface PostData {
-    _id: number | string;
-    userId?: number | string;
-    image?: string;
-    profile?: string;
-    name?: string;
-    date?: string;
-    desc?: string;
-    likes?: string;
-    liked?: boolean;
-  }
+  let { posts, loading } = useSelector((state: postDataType) => state.post);
 
   useEffect(() => {
     dispatch(getTimelinePosts(user._id));
@@ -31,7 +19,10 @@ const Posts: any = () => {
 
   if (params.id)
     posts =
-      posts && posts.filter((post: PostData) => post.userId === params.id);
+      posts &&
+      posts.filter(
+        (post: { userId: string | number }) => post.userId === params.id
+      );
 
   return (
     <>
@@ -43,7 +34,7 @@ const Posts: any = () => {
           </Alert>
         ) : (
           !loading &&
-          posts.map((post: PostData, id: number) => {
+          posts.map((post: postDataType, id: number) => {
             return <Post data={post} key={id} />;
           })
         )}

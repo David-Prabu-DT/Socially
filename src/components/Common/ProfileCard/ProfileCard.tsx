@@ -6,10 +6,11 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
 
+const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
 const ProfileCard = ({ location }) => {
   const user: any = useSelector((state: RootState) => state.auth.authData);
   const posts: any = useSelector((state: RootState) => state.post.posts);
-  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const ProfilePage = location === "profilePage";
   return (
     <div>
@@ -60,8 +61,10 @@ const ProfileCard = ({ location }) => {
                 <div className="follow">
                   <span>
                     {posts &&
-                      posts.filter((post: any) => post.userId === user._id)
-                        .length}
+                      posts.filter(
+                        (post: { userId?: string | number }) =>
+                          void post.userId === user._id
+                      ).length}
                   </span>
                   <span>Posts</span>
                 </div>

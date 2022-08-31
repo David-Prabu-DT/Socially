@@ -1,11 +1,6 @@
 import * as UserApi from "../api/UserRequests";
 import { AppDispatch, authActions } from "../store/ReduxStore";
-interface signUpType {
-  firstName?: string;
-  lastName?: string;
-  email?: string | number;
-  password?: string | number;
-}
+import { signUpType } from "../types/Global";
 
 const {
   UPDATING_START,

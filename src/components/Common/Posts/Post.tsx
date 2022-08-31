@@ -16,24 +16,14 @@ import AddCommentIcon from "@mui/icons-material/AddComment";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { RootState } from "../../../store/ReduxStore";
 import { likePost } from "../../../api/PostsRequests";
+import { postDataType } from "../../../types/Global";
 
-interface PostData {
-  _id: number | string;
-  image?: string;
-  profile?: string;
-  name?: string;
-  date?: string;
-  desc?: string;
-  likes?: string;
-  liked?: boolean;
-  createdAt?: string;
-}
+const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
-const Post: React.FC<{ data: PostData }> = ({ data }) => {
+const Post: React.FC<{ data: postDataType }> = ({ data }) => {
   const user: any = useSelector((state: RootState) => state.auth.authData);
   const [liked, setLiked] = useState(data?.likes?.includes(user._id));
   const [likes, setLikes] = useState(data?.likes?.length || 0);
-  const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const handleLike = () => {
     likePost(data._id, user._id);
@@ -55,11 +45,7 @@ const Post: React.FC<{ data: PostData }> = ({ data }) => {
                 }
               />
             }
-            action={
-              <IconButton aria-label="settings">
-                {/* <MoreVertIcon /> */}
-              </IconButton>
-            }
+            action={<IconButton aria-label="settings"></IconButton>}
             title={data.name ?? "User Name"}
             subheader={
               data?.createdAt

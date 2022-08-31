@@ -29,12 +29,11 @@ const animate = {
   },
 };
 
-const LoginForm = ({ setAuth }: any) => {
+const LoginForm = () => {
   const [showPassword, setShowPassword] = useState<Boolean>(false);
   const [open, setOpen] = useState<Boolean>(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<string>("");
-  // const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
   const LoginSchema = Yup.object().shape({
@@ -42,7 +41,9 @@ const LoginForm = ({ setAuth }: any) => {
     password: Yup.string().required("Password is required"),
   });
 
-  const responseHandler = (res: object | any) => {
+  const responseHandler = (res: {
+    response: { data: React.SetStateAction<string> };
+  }) => {
     setOpen(true);
     setLoading(false);
     setAlert(res.response.data);
@@ -62,9 +63,7 @@ const LoginForm = ({ setAuth }: any) => {
     validationSchema: LoginSchema,
     onSubmit: () => {
       setLoading(true);
-      setTimeout(() => {
-        dispatch(logIn(values, responseHandler));
-      }, 2000);
+      setTimeout(() => dispatch(logIn(values, responseHandler)), 2000);
     },
   });
 

@@ -7,6 +7,8 @@ import { uploadImage } from "../../../actions/UploadAction";
 import { updateUser } from "../../../actions/UserAction";
 import { RootState } from "../../../store/ReduxStore";
 
+interface authDataType {}
+
 const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   const theme = useMantineTheme();
   const { password, ...other } = data;
@@ -15,7 +17,9 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   const [coverImage, setCoverImage] = useState(null);
   const dispatch = useDispatch();
   const param = useParams();
-  const user: any = useSelector((state: RootState) => state.auth.authData);
+  const user: any = useSelector(
+    (state: RootState) => state.auth.authData
+  );
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

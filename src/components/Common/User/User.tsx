@@ -3,16 +3,17 @@ import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { followUser, unFollowUser } from "../../../actions/UserAction";
 import { AppDispatch, RootState } from "../../../store/ReduxStore";
+import { personData } from "../../../types/Global";
 
-const User = ({ person, followers }: any) => {
-  const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
+const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
+
+const User = ({ person }: personData) => {
   const user: any = useSelector((state: RootState) => state.auth.authData);
   const dispatch: AppDispatch = useDispatch();
   const [following, setFollowing] = useState<object>(
     person.followers.includes(user._id)
   );
 
- 
   const handleFollow = useCallback(async () => {
     dispatch(
       following ? unFollowUser(person._id, user) : followUser(person?._id, user)

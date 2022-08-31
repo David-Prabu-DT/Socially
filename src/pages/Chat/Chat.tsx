@@ -12,7 +12,7 @@ import Search from "../../components/Common/Search/Search";
 
 const Chat = () => {
   const socket: any = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const user: any = useSelector((state: any) => state);
+  const user: any = useSelector((state: root) => state);
 
   const [chats, setChats] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);

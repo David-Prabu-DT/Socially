@@ -12,32 +12,27 @@ import {
 } from "@mui/material";
 import "./PostShare.module.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import VideoCallRoundedIcon from "@mui/icons-material/VideoCallRounded";
-import AddLocationRoundedIcon from "@mui/icons-material/AddLocationRounded";
-import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
 import SendIcon from "@mui/icons-material/Send";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/ReduxStore";
 import { uploadImage, uploadPost } from "../../../actions/UploadAction";
+import { uploadPostType } from "../../../types/Global";
 
-interface ImgBlob {
-  image?: string;
-}
+const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const PostShare = () => {
-  const [image, setImage] = useState<ImgBlob | null | any>(null);
+  const [image, setImage] = useState<any | Blob | null>();
   const imageRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const dispatch: AppDispatch = useDispatch();
   const user: any = useSelector((state: RootState) => state.auth.authData);
   const loading = useSelector((state: RootState) => state.post.uploading);
   const [desc, setDesc] = useState("");
-  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const onImageChange = (_event: React.ChangeEvent<HTMLInputElement>) => {
     if (_event.target.files && _event.target.files[0]) {
-      let img: Blob | string = _event.target.files[0];
+      let img: Blob | null = _event.target.files[0];
       setImage(img);
     }
   };
@@ -47,26 +42,27 @@ const PostShare = () => {
     e.preventDefault();
 
     //post data
-    const newPost: any = {
+    const newPost: uploadPostType = {
       userId: user._id,
       desc: desc,
     };
 
     // if there is an image with post
     if (image) {
-      const data: HTMLFormElement | any = new FormData();
+      const data: { name?: string; file?: Blob | null } | FormData =
+        new FormData();
       const fileName = Date.now() + image.name;
       data.append("name", fileName);
       data.append("file", image);
       newPost.image = fileName;
-      console.log(newPost);
+
       try {
         dispatch(uploadImage(data));
       } catch (err) {
         console.log(err);
       }
     }
-    console.log(newPost);
+
     dispatch(uploadPost(newPost));
     resetShare();
   };
@@ -114,7 +110,7 @@ const PostShare = () => {
                 margin="dense"
                 fullWidth
                 required
-                onChange={(e: any) => setDesc(e.target.value)}
+                onChange={(e) => setDesc(e.target.value)}
               />
             </Grid>
           </Grid>

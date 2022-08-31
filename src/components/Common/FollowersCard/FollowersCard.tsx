@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { getAllUser } from "../../../api/UserRequests";
 import { RootState } from "../../../store/ReduxStore";
 import FollowersModal from "../../Modals/FollowersModal/FollowersModal";
+import { personData } from "../../../types/Global";
 const User = React.lazy(() => import("../User/User"));
 
 const FollowersCard = ({ location }) => {
@@ -39,10 +40,15 @@ const FollowersCard = ({ location }) => {
         )}
         <Suspense fallback={<CircularProgress style={{ display: "flex" }} />}>
           <div style={{ height: cardHeight, overflow: "scroll" }}>
-            {persons.map((person: any, id) => {
-              if (person._id !== user._id)
+            {persons.map((personData: personData, id: number) => {
+              if (personData._id !== user._id)
                 return (
-                  <User person={person} followers={person.followers} key={id} />
+                  <User
+                    person={personData}
+                    followers={personData.followers}
+                    key={id}
+                    _id={""}
+                  />
                 );
             })}
           </div>
