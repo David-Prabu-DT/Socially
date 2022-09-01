@@ -1,10 +1,7 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
-// import SearchIcon from "@mui/icons-material/Search";
 
 const Search = () => {
-  // const imageSrc = process.env.REACT_APP_IMAGE_FOLDER;
-
   const imageSrc = `${window.location.origin}/images/`;
   return (
     <div>
@@ -22,7 +19,7 @@ const Search = () => {
           <Grid item xs={10} display="flex" alignItems="center">
             <Typography variant="h4" color="teal">
               Socially
-            </Typography>          
+            </Typography>
           </Grid>
         </Grid>
       </Box>

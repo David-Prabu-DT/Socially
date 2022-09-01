@@ -10,12 +10,12 @@ const User = React.lazy(() => import("../User/User"));
 
 const FollowersCard = ({ location }) => {
   const [modalOpened, setModalOpened] = useState(false);
-  const [persons, setPersons] = useState([]);
+  const [persons, setPersons] = useState<personData | Array<personData>>();
   const user: authDataType | null = useSelector(
     (state: RootState) => state.auth.authData
   );
 
-  const userId: string = user?._id;
+  const userId: string | null = user && user["_id"];
 
   const cardHeight = location !== "homepage" ? "40vh" : "25vh";
 
@@ -44,7 +44,7 @@ const FollowersCard = ({ location }) => {
         )}
         <Suspense fallback={<CircularProgress style={{ display: "flex" }} />}>
           <div style={{ height: cardHeight, overflow: "scroll" }}>
-            {persons.map((personData: personData, id: number) => {
+            {(persons as unknown as any[])?.map((personData, id: number) => {
               if (personData._id !== userId)
                 return (
                   <User

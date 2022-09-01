@@ -10,12 +10,18 @@ import { authDataType, postDataType } from "../../../types/Global";
 const Posts = () => {
   const params = useParams();
   const dispatch: AppDispatch = useDispatch();
-  const user: authDataType |null= useSelector((state: RootState) => state.auth.authData);
-  let { posts, loading } = useSelector((state: postDataType) => state.post);
+  const user: authDataType | null = useSelector(
+    (state: RootState) => state.auth.authData
+  );
+  let { posts, loading } = useSelector(
+    (state: postDataType | object[]) => state["post"]
+  );
+
+  const userId: string | null = user && user["_id"];
 
   useEffect(() => {
-    dispatch(getTimelinePosts(user?._id));
-  }, [dispatch, user?._id]);
+    dispatch(getTimelinePosts(userId));
+  }, [dispatch, userId]);
 
   if (params.id)
     posts =

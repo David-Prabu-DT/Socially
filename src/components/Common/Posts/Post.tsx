@@ -23,11 +23,14 @@ const Post: React.FC<{ data: postDataType }> = ({ data }) => {
   const user: authDataType | null = useSelector(
     (state: RootState) => state.auth.authData
   );
-  const [liked, setLiked] = useState(data?.likes?.includes(user?._id ?? ""));
+
+  const userId: string | null = user && user["_id"];
+
+  const [liked, setLiked] = useState(data?.likes?.includes(userId ?? ""));
   const [likes, setLikes] = useState(data?.likes?.length || 0);
 
   const handleLike = () => {
-    likePost(data._id, user?._id);
+    likePost(data._id, userId);
     setLiked((prev) => !prev);
     liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
   };

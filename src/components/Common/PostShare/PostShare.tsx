@@ -22,13 +22,16 @@ import { authDataType, uploadPostType } from "../../../types/Global";
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const PostShare = () => {
-  const [image, setImage] = useState<any | Blob | null>();
+  const [image, setImage] = useState<Blob | null>();
   const imageRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const dispatch: AppDispatch = useDispatch();
   const user: authDataType | null = useSelector(
     (state: RootState) => state.auth.authData
   );
+
+  const userId: string | null = user && user["_id"];
+
   const loading = useSelector((state: RootState) => state.post.uploading);
   const [desc, setDesc] = useState("");
 
@@ -45,7 +48,7 @@ const PostShare = () => {
 
     //post data
     const newPost: uploadPostType = {
-      userId: user?._id,
+      userId: userId ?? "",
       desc: desc,
     };
 
@@ -53,7 +56,7 @@ const PostShare = () => {
     if (image) {
       const data: { name?: string; file?: Blob | null } | FormData =
         new FormData();
-      const fileName = `${Date.now()} ${image?.name}`;
+      const fileName = `${Date.now()} ${image["name"]}`;
       data.append("name", fileName);
       data.append("file", image);
       newPost.image = fileName;
@@ -90,8 +93,8 @@ const PostShare = () => {
               <div className="ProfileImages">
                 <img
                   src={
-                    user?.profilePicture
-                      ? serverPublic + user?.profilePicture
+                    user && user["profilePicture"]
+                      ? serverPublic + user["profilePicture"]
                       : serverPublic + "defaultProfile.png"
                   }
                   alt="Profile"

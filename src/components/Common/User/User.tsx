@@ -11,18 +11,25 @@ const User = ({ person }: personData) => {
   const user: authDataType | null = useSelector(
     (state: RootState) => state.auth.authData
   );
+
+  const userId: string | null = user && user["_id"];
   const dispatch: AppDispatch = useDispatch();
-  const [following, setFollowing] = useState<object>(
-    person.followers.includes(user?._id)
+  const [following, setFollowing] = useState(
+    person && person["followers"].includes(userId)
   );
+
+  const personId = person && person["_id"];
+  const profilePicture = person && person["profilePicture"];
+  const firstname = person && person["firstname"];
+  const username = person && person["username"];
 
   const handleFollow = useCallback(async () => {
     dispatch(
-      following ? unFollowUser(person._id, user) : followUser(person?._id, user)
+      following ? unFollowUser(personId, user) : followUser(personId, user)
     );
 
-    setFollowing((prev) => !prev);
-  }, [dispatch, following, person._id, user]);
+    setFollowing((prev: any) => !prev);
+  }, [dispatch, following, personId, user]);
 
   return (
     <div>
@@ -37,8 +44,8 @@ const User = ({ person }: personData) => {
           >
             <Avatar
               src={
-                publicFolder + person.profilePicture
-                  ? publicFolder + person.profilePicture
+                publicFolder + profilePicture
+                  ? publicFolder + profilePicture
                   : publicFolder + "defaultProfile.png"
               }
             />
@@ -51,11 +58,11 @@ const User = ({ person }: personData) => {
             alignItems="center"
           >
             <Typography variant="body2" gutterBottom>
-              {person.firstname}
+              {firstname}
             </Typography>
             &nbsp;
             <Typography variant="caption" display="block" gutterBottom>
-              @{person.username}
+              @{username}
             </Typography>
           </Grid>
           <Grid

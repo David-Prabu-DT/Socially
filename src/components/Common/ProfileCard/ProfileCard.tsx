@@ -10,29 +10,37 @@ import { authDataType, postsDataType } from "../../../types/Global";
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const ProfileCard = ({ location }) => {
-  const user: /*authDataType | null */ any = useSelector(
+  const user: authDataType | null = useSelector(
     (state: RootState) => state.auth.authData
   );
   const posts: postsDataType | null = useSelector(
     (state: RootState) => state.post.posts
   );
   const ProfilePage = location === "profilePage";
+
+  const userId: string | null = user && user["_id"];
+  const firstname = user && user["firstname"];
+  const lastname = user && user["lastname"];
+  const worksAt =
+    user && user["worksAt"] ? user["worksAt"] : "Write about yourself";
+  const following: Array<Object> | null = user && user["following"];
+  const followers: Array<Object> | null = user && user["followers"];
   return (
     <div>
       <Paper elevation={0} style={{ padding: 5 }}>
         <div className="ProfileImages">
           <img
             src={
-              user?.coverPicture
-                ? serverPublic + user?.coverPicture
+              user && user["coverPicture"]
+                ? serverPublic + user["coverPicture"]
                 : serverPublic + "defaultCover.jpg"
             }
             alt="CoverImage"
           />
           <img
             src={
-              user?.profilePicture
-                ? serverPublic + user?.profilePicture
+              user && user["profilePicture"]
+                ? serverPublic + user["profilePicture"]
                 : serverPublic + "defaultProfile.png"
             }
             alt="Profile"
@@ -42,21 +50,21 @@ const ProfileCard = ({ location }) => {
 
         <div className="ProfileName">
           <span>
-            {user?.firstname} {user?.lastname}
+            {firstname} {lastname}
           </span>
-          <span>{user?.worksAt ? user?.worksAt : "Write about yourself"}</span>
+          <span>{worksAt}</span>
         </div>
 
         <div className="followStatus">
           <hr />
           <div>
             <div className="follow">
-              <span>{user?.following?.length}</span>
+              <span>{(following as unknown as any[]).length}</span>
               <span>Followings</span>
             </div>
             <div className="vl"></div>
             <div className="follow">
-              <span>{user?.followers?.length}</span>
+              <span>{(followers as unknown as any[]).length}</span>
               <span>Followers</span>
             </div>
 
@@ -66,9 +74,9 @@ const ProfileCard = ({ location }) => {
                 <div className="follow">
                   <span>
                     {posts &&
-                      posts.filter(
+                      (posts as unknown as any[]).filter(
                         (post: { userId?: string | number }) =>
-                          void post.userId === user?._id
+                          void post.userId === userId
                       ).length}
                   </span>
                   <span>Posts</span>
@@ -80,7 +88,7 @@ const ProfileCard = ({ location }) => {
         </div>
         {ProfilePage || (
           <Link
-            to={`/profile/${user?._id}`}
+            to={`/profile/${userId}`}
             style={{ textDecoration: "none", color: "inherit", paddingTop: 5 }}
           >
             <Button

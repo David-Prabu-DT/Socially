@@ -26,6 +26,7 @@ const RightNavbar = () => {
   };
 
   const imageSrc = `${window.location.origin}/images/`;
+  const userId: string | null = user && user["_id"];
 
   return (
     <div>
@@ -62,7 +63,7 @@ const RightNavbar = () => {
           </Tooltip>
 
           <Tooltip title="Profile" arrow>
-            <Link to={`/profile/${user?._id}`}>
+            <Link to={`/profile/${userId}`}>
               <IconButton>
                 <PersonOutlineTwoToneIcon />
               </IconButton>
