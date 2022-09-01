@@ -5,12 +5,17 @@ import { RootState } from "../../../store/ReduxStore";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
+import { authDataType, postsDataType } from "../../../types/Global";
 
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const ProfileCard = ({ location }) => {
-  const user: any = useSelector((state: RootState) => state.auth.authData);
-  const posts: any = useSelector((state: RootState) => state.post.posts);
+  const user: /*authDataType | null */ any = useSelector(
+    (state: RootState) => state.auth.authData
+  );
+  const posts: postsDataType | null = useSelector(
+    (state: RootState) => state.post.posts
+  );
   const ProfilePage = location === "profilePage";
   return (
     <div>
@@ -18,16 +23,16 @@ const ProfileCard = ({ location }) => {
         <div className="ProfileImages">
           <img
             src={
-              user.coverPicture
-                ? serverPublic + user.coverPicture
+              user?.coverPicture
+                ? serverPublic + user?.coverPicture
                 : serverPublic + "defaultCover.jpg"
             }
             alt="CoverImage"
           />
           <img
             src={
-              user.profilePicture
-                ? serverPublic + user.profilePicture
+              user?.profilePicture
+                ? serverPublic + user?.profilePicture
                 : serverPublic + "defaultProfile.png"
             }
             alt="Profile"
@@ -37,21 +42,21 @@ const ProfileCard = ({ location }) => {
 
         <div className="ProfileName">
           <span>
-            {user.firstname} {user.lastname}
+            {user?.firstname} {user?.lastname}
           </span>
-          <span>{user.worksAt ? user.worksAt : "Write about yourself"}</span>
+          <span>{user?.worksAt ? user?.worksAt : "Write about yourself"}</span>
         </div>
 
         <div className="followStatus">
           <hr />
           <div>
             <div className="follow">
-              <span>{user.following.length}</span>
+              <span>{user?.following?.length}</span>
               <span>Followings</span>
             </div>
             <div className="vl"></div>
             <div className="follow">
-              <span>{user.followers.length}</span>
+              <span>{user?.followers?.length}</span>
               <span>Followers</span>
             </div>
 
@@ -63,7 +68,7 @@ const ProfileCard = ({ location }) => {
                     {posts &&
                       posts.filter(
                         (post: { userId?: string | number }) =>
-                          void post.userId === user._id
+                          void post.userId === user?._id
                       ).length}
                   </span>
                   <span>Posts</span>
@@ -75,7 +80,7 @@ const ProfileCard = ({ location }) => {
         </div>
         {ProfilePage || (
           <Link
-            to={`/profile/${user._id}`}
+            to={`/profile/${user?._id}`}
             style={{ textDecoration: "none", color: "inherit", paddingTop: 5 }}
           >
             <Button

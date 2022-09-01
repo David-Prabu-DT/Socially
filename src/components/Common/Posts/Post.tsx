@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardMedia,
   IconButton,
-  Paper,
   Typography,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -16,17 +15,19 @@ import AddCommentIcon from "@mui/icons-material/AddComment";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { RootState } from "../../../store/ReduxStore";
 import { likePost } from "../../../api/PostsRequests";
-import { postDataType } from "../../../types/Global";
+import { authDataType, postDataType } from "../../../types/Global";
 
 const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const Post: React.FC<{ data: postDataType }> = ({ data }) => {
-  const user: any = useSelector((state: RootState) => state.auth.authData);
-  const [liked, setLiked] = useState(data?.likes?.includes(user._id));
+  const user: authDataType | null = useSelector(
+    (state: RootState) => state.auth.authData
+  );
+  const [liked, setLiked] = useState(data?.likes?.includes(user?._id ?? ""));
   const [likes, setLikes] = useState(data?.likes?.length || 0);
 
   const handleLike = () => {
-    likePost(data._id, user._id);
+    likePost(data._id, user?._id);
     setLiked((prev) => !prev);
     liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
   };

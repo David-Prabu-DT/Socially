@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect } from "react";
+import React, { FormEvent } from "react";
 import { useRef, useState } from "react";
 import {
   Box,
@@ -17,7 +17,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/ReduxStore";
 import { uploadImage, uploadPost } from "../../../actions/UploadAction";
-import { uploadPostType } from "../../../types/Global";
+import { authDataType, uploadPostType } from "../../../types/Global";
 
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -26,7 +26,9 @@ const PostShare = () => {
   const imageRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const dispatch: AppDispatch = useDispatch();
-  const user: any = useSelector((state: RootState) => state.auth.authData);
+  const user: authDataType | null = useSelector(
+    (state: RootState) => state.auth.authData
+  );
   const loading = useSelector((state: RootState) => state.post.uploading);
   const [desc, setDesc] = useState("");
 
@@ -43,7 +45,7 @@ const PostShare = () => {
 
     //post data
     const newPost: uploadPostType = {
-      userId: user._id,
+      userId: user?._id,
       desc: desc,
     };
 
@@ -51,7 +53,7 @@ const PostShare = () => {
     if (image) {
       const data: { name?: string; file?: Blob | null } | FormData =
         new FormData();
-      const fileName = Date.now() + image.name;
+      const fileName = `${Date.now()} ${image?.name}`;
       data.append("name", fileName);
       data.append("file", image);
       newPost.image = fileName;
@@ -88,8 +90,8 @@ const PostShare = () => {
               <div className="ProfileImages">
                 <img
                   src={
-                    user.profilePicture
-                      ? serverPublic + user.profilePicture
+                    user?.profilePicture
+                      ? serverPublic + user?.profilePicture
                       : serverPublic + "defaultProfile.png"
                   }
                   alt="Profile"

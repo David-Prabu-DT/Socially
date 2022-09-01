@@ -5,7 +5,7 @@ const API = axios.create({ baseURL: process.env.BASE_URL });
 
 export const useAxiosFetch = (axiosParams: object) => {
    const [data, setData] = useState<undefined>(undefined);
-   const [error, setError] = useState<any>("");
+   const [error, setError] = useState<string | null>("");
    const [loading, setLoading] = useState<boolean>(true);
 
    const fetchData = async () => {
@@ -13,7 +13,7 @@ export const useAxiosFetch = (axiosParams: object) => {
          const response = await axios.get("");
          setData(response.data);
       } catch (error) {
-         setError(error);
+         setError(String(error));
          setLoading(false);
       } finally {
          setLoading(false);

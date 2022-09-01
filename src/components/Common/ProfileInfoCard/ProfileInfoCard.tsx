@@ -2,23 +2,25 @@ import React, { useEffect, useState } from "react";
 import "./InfoCard.css";
 import * as Unicons from "@iconscout/react-unicons";
 import ProfileModal from "../../Modals/ProfileModal/ProfileModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as UserApi from "../../../api/UserRequests";
-import { AppDispatch, RootState } from "../../../store/ReduxStore";
+import { RootState } from "../../../store/ReduxStore";
 import { Paper, Typography } from "@mui/material";
-import { profileUserType, userAuthData } from "../../../types/Global";
+import { profileUserType, authDataType } from "../../../types/Global";
 
 const ProfileInfoCard = () => {
   const params = useParams();
   const [modalOpened, setModalOpened] = useState(false);
   const profileUserId: number = Number(params.id);
   const [profileUser, setProfileUser] = useState<profileUserType>({});
-  const user: any = useSelector((state: RootState) => state.auth.authData);
+  const user: authDataType | null = useSelector(
+    (state: RootState) => state.auth.authData
+  );
 
   useEffect(() => {
     const fetchProfileUser = async () => {
-      if (profileUserId === user._id) {
+      if (profileUserId === user?._id) {
         setProfileUser(user);
       } else {
         const profileUser: object = await UserApi.getUser(profileUserId);
@@ -35,7 +37,7 @@ const ProfileInfoCard = () => {
         <Typography variant="subtitle1" gutterBottom>
           Profile Info
         </Typography>
-        {user._id === profileUserId ? (
+        {user?._id === profileUserId ? (
           <div>
             <Unicons.UilPen
               width="2rem"

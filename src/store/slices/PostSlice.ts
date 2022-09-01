@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { postsDataType } from "../../types/Global";
 
 const initialState = { posts: null, loading: false, error: false, uploading: false }
 
@@ -12,7 +13,7 @@ export const PostSlice = createSlice({
       UPLOAD_SUCCESS: (_state: any, action) => {
          return {
             ..._state,
-            posts: [action.payload, ..._state.posts],
+            posts: [action.payload, ..._state?.posts],
             uploading: false,
             error: false,
          };
@@ -28,6 +29,7 @@ export const PostSlice = createSlice({
 
       },
       RETRIEVING_FAIL: (_state) => {
+
          return { ..._state, loading: false, error: true };
       }
    }

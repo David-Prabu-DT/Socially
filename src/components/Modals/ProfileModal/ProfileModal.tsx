@@ -1,25 +1,19 @@
 import React, { useState } from "react";
 import { Modal, useMantineTheme } from "@mantine/core";
-import "./ProfileModal.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { uploadImage } from "../../../actions/UploadAction";
 import { updateUser } from "../../../actions/UserAction";
-import { RootState } from "../../../store/ReduxStore";
-
-interface authDataType {}
 
 const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   const theme = useMantineTheme();
   const { password, ...other } = data;
   const [formData, setFormData] = useState(other);
-  const [profileImage, setProfileImage] = useState(null);
-  const [coverImage, setCoverImage] = useState(null);
+  const [profileImage, setProfileImage] = useState<object | any>(null);
+  const [coverImage, setCoverImage] = useState<object | any>(null);
   const dispatch = useDispatch();
   const param = useParams();
-  const user: any = useSelector(
-    (state: RootState) => state.auth.authData
-  );
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
