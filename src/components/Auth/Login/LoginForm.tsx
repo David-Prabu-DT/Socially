@@ -72,7 +72,12 @@ const LoginForm = () => {
   return (
     <>
       <FormikProvider value={Formik}>
-        <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Form
+          autoComplete="off"
+          noValidate
+          onSubmit={handleSubmit}
+          data-testid="form"
+        >
           <Box
             component={motion.div}
             animate={{
@@ -99,6 +104,7 @@ const LoginForm = () => {
                 {...getFieldProps("username")}
                 error={Boolean(touched.username && errors.username)}
                 helperText={touched.username && errors.username}
+                data-testid="username"
               />
 
               <TextField
@@ -124,6 +130,7 @@ const LoginForm = () => {
                     </InputAdornment>
                   ),
                 }}
+                data-testid="password"
               />
             </Box>
 

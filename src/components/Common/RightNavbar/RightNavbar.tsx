@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Badge,
   Box,
   Button,
   Grid,
@@ -11,20 +10,23 @@ import {
 } from "@mui/material";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
-import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
 import SpeakerNotesTwoToneIcon from "@mui/icons-material/SpeakerNotesTwoTone";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, authActions, RootState } from "../../../store/ReduxStore";
+import { authDataType } from "../../../types/Global";
 
 const RightNavbar = () => {
-  const user: any = useSelector((state: RootState) => state.auth.authData);
+  const user: authDataType | null = useSelector(
+    (state: RootState) => state.auth.authData
+  );
   const dispatch: AppDispatch = useDispatch();
   const handleLogOut = () => {
     dispatch(authActions.LOG_OUT());
   };
 
   const imageSrc = `${window.location.origin}/images/`;
+  const userId: string | null = user && user["_id"];
 
   return (
     <div>
@@ -61,7 +63,7 @@ const RightNavbar = () => {
           </Tooltip>
 
           <Tooltip title="Profile" arrow>
-            <Link to={`/profile/${user._id}`}>
+            <Link to={`/profile/${userId}`}>
               <IconButton>
                 <PersonOutlineTwoToneIcon />
               </IconButton>

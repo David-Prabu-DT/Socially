@@ -5,13 +5,17 @@ import { useSelector } from "react-redux";
 import { getAllUser } from "../../../api/UserRequests";
 import { RootState } from "../../../store/ReduxStore";
 import FollowersModal from "../../Modals/FollowersModal/FollowersModal";
-import { personData } from "../../../types/Global";
+import { authDataType, personData } from "../../../types/Global";
 const User = React.lazy(() => import("../User/User"));
 
 const FollowersCard = ({ location }) => {
   const [modalOpened, setModalOpened] = useState(false);
-  const [persons, setPersons] = useState([]);
-  const user: any = useSelector((state: RootState) => state.auth.authData);
+  const [persons, setPersons] = useState<personData | Array<personData>>();
+  const user: authDataType | null = useSelector(
+    (state: RootState) => state.auth.authData
+  );
+
+  const userId: string | null = user && user["_id"];
 
   const cardHeight = location !== "homepage" ? "40vh" : "25vh";
 
@@ -40,8 +44,8 @@ const FollowersCard = ({ location }) => {
         )}
         <Suspense fallback={<CircularProgress style={{ display: "flex" }} />}>
           <div style={{ height: cardHeight, overflow: "scroll" }}>
-            {persons.map((personData: personData, id: number) => {
-              if (personData._id !== user._id)
+            {(persons as unknown as any[])?.map((personData, id: number) => {
+              if (personData._id !== userId)
                 return (
                   <User
                     person={personData}

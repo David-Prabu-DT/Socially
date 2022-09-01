@@ -2,23 +2,26 @@ import React, { useEffect, useState } from "react";
 import "./InfoCard.css";
 import * as Unicons from "@iconscout/react-unicons";
 import ProfileModal from "../../Modals/ProfileModal/ProfileModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as UserApi from "../../../api/UserRequests";
-import { AppDispatch, RootState } from "../../../store/ReduxStore";
+import { RootState } from "../../../store/ReduxStore";
 import { Paper, Typography } from "@mui/material";
-import { profileUserType, userAuthData } from "../../../types/Global";
+import { profileUserType, authDataType } from "../../../types/Global";
 
 const ProfileInfoCard = () => {
   const params = useParams();
   const [modalOpened, setModalOpened] = useState(false);
   const profileUserId: number = Number(params.id);
-  const [profileUser, setProfileUser] = useState<profileUserType>({});
-  const user: any = useSelector((state: RootState) => state.auth.authData);
+  const [profileUser, setProfileUser] = useState<any>({});
+  const user: authDataType | null = useSelector(
+    (state: RootState) => state.auth.authData
+  );
+  const userId: string | null = user && user["_id"];
 
   useEffect(() => {
     const fetchProfileUser = async () => {
-      if (profileUserId === user._id) {
+      if (profileUserId === userId) {
         setProfileUser(user);
       } else {
         const profileUser: object = await UserApi.getUser(profileUserId);
@@ -27,7 +30,7 @@ const ProfileInfoCard = () => {
       }
     };
     fetchProfileUser();
-  }, [profileUserId, user]);
+  }, [profileUserId, user, userId]);
 
   return (
     <div>
@@ -35,7 +38,7 @@ const ProfileInfoCard = () => {
         <Typography variant="subtitle1" gutterBottom>
           Profile Info
         </Typography>
-        {user._id === profileUserId ? (
+        {userId === profileUserId ? (
           <div>
             <Unicons.UilPen
               width="2rem"
@@ -52,15 +55,15 @@ const ProfileInfoCard = () => {
           ""
         )}
         <Typography variant="subtitle2" gutterBottom>
-          <strong>Status : </strong> {profileUser.relationship ?? "-"}
+          <strong>Status : </strong> {profileUser["relationship"] ?? "-"}
         </Typography>
 
         <Typography variant="subtitle2" gutterBottom>
-          <strong>Lives In : </strong> {profileUser.livesIn ?? "-"}
+          <strong>Lives In : </strong> {profileUser["livesIn"] ?? "-"}
         </Typography>
 
         <Typography variant="subtitle2" gutterBottom>
-          <strong>Works At : </strong> {profileUser.worksAt ?? "-"}
+          <strong>Works At : </strong> {profileUser["worksAt"] ?? "-"}
         </Typography>
         {/* <hr /> */}
         {/* <Button

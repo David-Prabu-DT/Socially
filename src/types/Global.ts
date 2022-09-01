@@ -32,7 +32,7 @@ export interface uploadPostType {
 
 export interface postDataType {
   createdAt: string;
-  post: any;
+  post: object[];
   _id: number | string;
   userId?: number | string;
   image?: string;
@@ -45,7 +45,37 @@ export interface postDataType {
 }
 
 export interface personData {
-  person: any;
-  followers: any;
-  _id: number | string;
+  _id?: number | string;
+  person?: object[];
+  followers?: number[] | string[];
+}
+
+export interface authDataType {
+  _id?: string | never,
+  username?: string,
+  password?: string,
+  firstname?: string,
+  lastname?: string,
+  isAdmin?: boolean,
+  followers?: string[] | number[],
+  following?: string[] | number[],
+  createdAt?: string,
+  updatedAt?: string,
+  worksAt?: string,
+  profilePicture?: string | null;
+  coverPicture?: string | null;
+  __v?: number
+}
+
+export interface postsDataType {
+  _id?: string,
+  userId?: string,
+  desc?: string,
+  likes?: string[] | number[],
+  createdAt?: string,
+  image?: string,
+  updatedAt?: string,
+  __v?: number
+  filter: Function;
+
 }

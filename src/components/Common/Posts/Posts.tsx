@@ -5,17 +5,23 @@ import Post from "./Post";
 import { getTimelinePosts } from "../../../actions/PostsAction";
 import { AppDispatch, RootState } from "../../../store/ReduxStore";
 import { Alert, AlertTitle } from "@mui/material";
-import { postDataType } from "../../../types/Global";
+import { authDataType, postDataType } from "../../../types/Global";
 
 const Posts = () => {
   const params = useParams();
   const dispatch: AppDispatch = useDispatch();
-  const user: any = useSelector((state: RootState) => state.auth.authData);
-  let { posts, loading } = useSelector((state: postDataType) => state.post);
+  const user: authDataType | null = useSelector(
+    (state: RootState) => state.auth.authData
+  );
+  let { posts, loading } = useSelector(
+    (state: postDataType | object[]) => state["post"]
+  );
+
+  const userId: string | null = user && user["_id"];
 
   useEffect(() => {
-    dispatch(getTimelinePosts(user._id));
-  }, [dispatch, user._id]);
+    dispatch(getTimelinePosts(userId));
+  }, [dispatch, userId]);
 
   if (params.id)
     posts =

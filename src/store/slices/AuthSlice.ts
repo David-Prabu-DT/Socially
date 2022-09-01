@@ -19,7 +19,6 @@ export const AuthSlice = createSlice({
         "profile",
         JSON.stringify({ ...action.payload.user })
       );
-
       return {
         ..._state,
         authData: action.payload.user,
@@ -45,7 +44,6 @@ export const AuthSlice = createSlice({
     UPDATING_FAIL: (_state) => {
       return { ..._state, updateLoading: true, error: true };
     },
-
     FOLLOW_USER: (_state: any, action) => {
       return {
         ..._state,
@@ -79,4 +77,5 @@ export const AuthSlice = createSlice({
       };
     },
   },
+
 });
