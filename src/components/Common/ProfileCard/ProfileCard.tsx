@@ -16,6 +16,9 @@ const ProfileCard = ({ location }) => {
   const posts: postsDataType | null = useSelector(
     (state: RootState) => state.post.posts
   );
+
+  console.log(user);
+
   const ProfilePage = location === "profilePage";
 
   const userId: string | null = user && user["_id"];

@@ -1,24 +1,34 @@
 import React, { useState } from "react";
+import * as Yup from "yup";
 import { Modal, useMantineTheme } from "@mantine/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { uploadImage } from "../../../actions/UploadAction";
 import { updateUser } from "../../../actions/UserAction";
+import { useFormik, Form, FormikProvider } from "formik";
+import { motion } from "framer-motion";
+import { Box, Stack, TextField, Typography } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+let easing = [0.6, -0.05, 0.01, 0.99];
+const animate = {
+  opacity: 1,
+  y: 0,
+  transition: {
+    duration: 0.6,
+    ease: easing,
+    delay: 0.16,
+  },
+};
 
 const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   const theme = useMantineTheme();
-  const { password, ...other } = data;
-  const [formData, setFormData] = useState(other);
-  const [profileImage, setProfileImage] = useState<object | any>(null);
-  const [coverImage, setCoverImage] = useState<object | any>(null);
+  const [profileImage, setProfileImage] = useState<Blob | null | any>(null);
+  const [coverImage, setCoverImage] = useState<Blob | null | any>(null);
   const dispatch = useDispatch();
   const param = useParams();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const onImageChange = (event) => {
+  const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
       event.target.name === "profileImage"
@@ -27,37 +37,68 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
     }
   };
 
-  // form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let UserData = formData;
-    if (profileImage) {
-      const data: any = new FormData();
-      const fileName = Date.now() + profileImage.name;
-      data.append("name", fileName);
-      data.append("file", profileImage);
-      UserData.profilePicture = fileName;
-      try {
-        dispatch(uploadImage(data));
-      } catch (err) {
-        console.log(err);
+  const ProfileSchema = Yup.object().shape({
+    firstname: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("First name required"),
+    lastname: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Last name required"),
+  });
+
+  const Formik = useFormik({
+    initialValues: {
+      firstname: "",
+      lastname: "",
+      worksAt: "",
+      livesIn: "",
+      country: "",
+      relationship: "",
+      // profilePicture: "",
+      // coverPicture: "",
+    },
+    validationSchema: ProfileSchema,
+    onSubmit: () => {
+      if (profileImage) {
+        const data: { name?: string; file?: Blob | null } | FormData =
+          new FormData();
+        const fileName = `${Date.now()} ${profileImage["name"]}`;
+        data.append("name", fileName);
+        data.append("file", profileImage);
+        // values.profilePicture = fileName;
+
+        try {
+          dispatch(uploadImage(data));
+        } catch (err) {
+          console.log(err);
+        }
       }
-    }
-    if (coverImage) {
-      const data = new FormData();
-      const fileName = Date.now() + coverImage.name;
-      data.append("name", fileName);
-      data.append("file", coverImage);
-      UserData.coverPicture = fileName;
-      try {
-        dispatch(uploadImage(data));
-      } catch (err) {
-        console.log(err);
+
+      if (coverImage) {
+        const data: { name?: string; file?: Blob | null } | FormData =
+          new FormData();
+        const fileName = `${Date.now()} ${coverImage["name"]}`;
+        data.append("name", fileName);
+        data.append("file", coverImage);
+        // values.coverPicture = fileName;
+        try {
+          dispatch(uploadImage(data));
+        } catch (err) {
+          console.log(err);
+        }
       }
-    }
-    dispatch(updateUser(param.id, UserData));
-    setModalOpened(false);
-  };
+      // console.log(values);
+      try {
+        dispatch(updateUser(param["id"], values));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+  const { errors, touched, values, handleSubmit, isSubmitting, getFieldProps } =
+    Formik;
 
   return (
     <Modal
@@ -72,79 +113,153 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
       opened={modalOpened}
       onClose={() => setModalOpened(false)}
     >
-      <form className="infoForm" onSubmit={handleSubmit}>
-        <h3>Your Info</h3>
-        <div>
-          <input
-            value={formData.firstname}
-            onChange={handleChange}
-            type="text"
-            placeholder="First Name"
-            name="firstname"
-            className="infoInput"
-          />
-          <input
-            value={formData.lastname}
-            onChange={handleChange}
-            type="text"
-            placeholder="Last Name"
-            name="lastname"
-            className="infoInput"
-          />
-        </div>
+      <Typography variant="h5" color="initial">
+        Update Your Info
+      </Typography>
+      <br />
+      <FormikProvider value={Formik}>
+        <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+          <Stack spacing={3}>
+            <Stack
+              component={motion.div}
+              initial={{ opacity: 0, y: 60 }}
+              animate={animate}
+              direction={{ xs: "column", sm: "row" }}
+              spacing={2}
+            >
+              <TextField
+                fullWidth
+                label="First name"
+                {...getFieldProps("firstname")}
+                error={Boolean(touched.firstname && errors.firstname)}
+                helperText={touched.firstname && errors.firstname}
+                size="small"
+                variant="standard"
+              />
 
-        <div>
-          <input
-            value={formData.worksAt}
-            onChange={handleChange}
-            type="text"
-            placeholder="Works at"
-            name="worksAt"
-            className="infoInput"
-          />
-        </div>
+              <TextField
+                fullWidth
+                label="Last name"
+                {...getFieldProps("lastname")}
+                error={Boolean(touched.lastname && errors.lastname)}
+                helperText={touched.lastname && errors.lastname}
+                size="small"
+                variant="standard"
+              />
+            </Stack>
 
-        <div>
-          <input
-            value={formData.livesIn}
-            onChange={handleChange}
-            type="text"
-            placeholder="Lives in"
-            name="livesIn"
-            className="infoInput"
-          />
-          <input
-            value={formData.country}
-            onChange={handleChange}
-            type="text"
-            placeholder="Country"
-            name="country"
-            className="infoInput"
-          />
-        </div>
+            <Stack
+              component={motion.div}
+              initial={{ opacity: 0, y: 60 }}
+              animate={animate}
+              direction={{ xs: "column", sm: "row" }}
+              spacing={2}
+            >
+              <TextField
+                fullWidth
+                autoComplete="worksAt"
+                type="text"
+                label="Works At"
+                {...getFieldProps("worksAt")}
+                error={Boolean(touched.worksAt && errors.worksAt)}
+                helperText={touched.worksAt && errors.worksAt}
+                size="small"
+                variant="standard"
+              />
 
-        <div>
-          <input
-            value={formData.relationship}
-            onChange={handleChange}
-            type="text"
-            className="infoInput"
-            placeholder="Relationship status"
-            name="relationship"
-          />
-        </div>
+              <TextField
+                fullWidth
+                autoComplete="current-password"
+                type="text"
+                label="Lives In"
+                {...getFieldProps("livesIn")}
+                error={Boolean(touched.livesIn && errors.livesIn)}
+                helperText={touched.livesIn && errors.livesIn}
+                size="small"
+                variant="standard"
+              />
+            </Stack>
 
-        <div>
-          Profile image
-          <input type="file" name="profileImage" onChange={onImageChange} />
-          Cover image
-          <input type="file" name="coverImage" onChange={onImageChange} />
-        </div>
+            <Stack
+              component={motion.div}
+              initial={{ opacity: 0, y: 60 }}
+              animate={animate}
+              direction={{ xs: "column", sm: "row" }}
+              spacing={2}
+            >
+              <TextField
+                fullWidth
+                autoComplete="country"
+                type="text"
+                label="Country"
+                {...getFieldProps("country")}
+                error={Boolean(touched.country && errors.country)}
+                helperText={touched.country && errors.country}
+                size="small"
+                variant="standard"
+              />
 
-        <button className="button infoButton" type="submit">
-          Update
-        </button>
-      </form>
+              <TextField
+                fullWidth
+                autoComplete="relationship"
+                type="text"
+                label="Relationship status"
+                {...getFieldProps("relationship")}
+                error={Boolean(touched.relationship && errors.relationship)}
+                helperText={touched.relationship && errors.relationship}
+                size="small"
+                variant="standard"
+              />
+            </Stack>
+
+            <Stack
+              component={motion.div}
+              initial={{ opacity: 0, y: 60 }}
+              animate={animate}
+              direction={{ xs: "column", sm: "row" }}
+              spacing={2}
+            >
+              <TextField
+                fullWidth
+                autoComplete="profileImage"
+                label="Profile Image"
+                variant="standard"
+                name="profileImage"
+                type="file"
+                onChange={onImageChange}
+              />
+
+              <TextField
+                fullWidth
+                autoComplete="coverImage"
+                type="file"
+                label="Cover Image"
+                size="small"
+                variant="standard"
+                onChange={onImageChange}
+              />
+            </Stack>
+
+            <Box
+              component={motion.div}
+              initial={{ opacity: 0, y: 20 }}
+              animate={animate}
+            >
+              <LoadingButton
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+                loading={isSubmitting}
+              >
+                Update
+              </LoadingButton>
+            </Box>
+          </Stack>
+        </Form>
+      </FormikProvider>
+      <br />
+      {/* <Alert severity="success">This is an error message!</Alert> */}
     </Modal>
   );
 };
