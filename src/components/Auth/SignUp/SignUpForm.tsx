@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { useState } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import {
-  Alert,
+  // Alert,
   Box,
   IconButton,
   InputAdornment,
@@ -145,7 +145,7 @@ const SignUpForm = () => {
         </Form>
       </FormikProvider>
       <br />
-      <Alert severity="success">This is an error message!</Alert>
+      {/* <Alert severity="success">This is an error message!</Alert> */}
     </>
   );
 };

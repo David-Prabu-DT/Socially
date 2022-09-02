@@ -1,6 +1,6 @@
 import * as UserApi from "../api/UserRequests";
 import { AppDispatch, authActions } from "../store/ReduxStore";
-import { signUpType } from "../types/Global";
+
 
 const {
   UPDATING_START,
@@ -11,12 +11,12 @@ const {
 } = authActions;
 
 export const updateUser =
-  (id: string | number, formData: signUpType) =>
+  (id: string, formData: any) =>
     async (dispatch: AppDispatch) => {
       dispatch(UPDATING_START);
       try {
         const { data } = await UserApi.updateUser(id, formData);
-        console.log("Action ko receive hoa hy ye : ", data);
+        console.log(data, "asduasgdyuau");
         dispatch(UPDATING_SUCCESS(data));
       } catch (error) {
         dispatch(UPDATING_FAIL);
