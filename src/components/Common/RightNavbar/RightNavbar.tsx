@@ -51,7 +51,7 @@ const RightNavbar = () => {
         </Box>
         <Box
           sx={{ display: { xs: "flex", md: "flex" } }}
-          justifyContent="space-between"
+          justifyContent="space-around"
           m={1}
         >
           <Tooltip title="Home" arrow>
@@ -78,13 +78,13 @@ const RightNavbar = () => {
           </IconButton>
         </Tooltip> */}
 
-          <Tooltip title="Message" arrow>
+          {/* <Tooltip title="Message" arrow>
             <Link to="/chat">
               <IconButton>
                 <SpeakerNotesTwoToneIcon />
               </IconButton>
             </Link>
-          </Tooltip>
+          </Tooltip> */}
 
           <Tooltip title="Logout" arrow>
             <Button variant="contained" color="error" onClick={handleLogOut}>
