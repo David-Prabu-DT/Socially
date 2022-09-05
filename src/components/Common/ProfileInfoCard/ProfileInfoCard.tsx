@@ -32,6 +32,8 @@ const ProfileInfoCard = () => {
       } else {
         const profileUser: object = await UserApi.getUser(profileUserId);
 
+        console.log(profileUser);
+
         setProfileUser(profileUser);
       }
     };

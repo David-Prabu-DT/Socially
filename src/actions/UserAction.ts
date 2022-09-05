@@ -16,7 +16,6 @@ export const updateUser =
       dispatch(UPDATING_START);
       try {
         const { data } = await UserApi.updateUser(id, formData);
-        console.log(data, "asduasgdyuau");
         dispatch(UPDATING_SUCCESS(data));
       } catch (error) {
         dispatch(UPDATING_FAIL);

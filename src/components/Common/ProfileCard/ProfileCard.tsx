@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ProfileCard.css";
 import { Button, Paper } from "@mui/material";
 import { RootState } from "../../../store/ReduxStore";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
 import { authDataType, postsDataType } from "../../../types/Global";
+import * as UserApi from "../../../api/UserRequests";
+import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
 
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -17,7 +18,7 @@ const ProfileCard = ({ location }) => {
     (state: RootState) => state.post.posts
   );
 
-  console.log(user);
+  const [profilePicture, setProfilePicture] = useState("");
 
   const ProfilePage = location === "profilePage";
 
@@ -26,28 +27,49 @@ const ProfileCard = ({ location }) => {
   const lastname = user && user["lastname"];
   const worksAt =
     user && user["worksAt"] ? user["worksAt"] : "Write about yourself";
-  const following: Array<Object> | null = user && user["following"];
-  const followers: Array<Object> | null = user && user["followers"];
+
+  const followingCount: Array<Object> | null =
+    user &&
+    (user["following"] as unknown as any[]).length !== 0 &&
+    (user["following"] as unknown as any[]).length;
+
+  const followersCount: Array<Object> | null =
+    user &&
+    (user["followers"] as unknown as any[]).length !== 0 &&
+    (user["followers"] as unknown as any[]).length;
+
+  const postsCount =
+    posts &&
+    (posts as unknown as any[]).filter((post) => post["userId"] === userId)
+      .length;
+
+  const defaultPicture = serverPublic + "defaultProfile.png";
+
+  const defaultCover = serverPublic + "defaultCover.jpg";
+
+  useEffect(() => {
+    const fetchProfileUser = async () => {
+      const profileUser: object = await UserApi.getUser(userId);
+
+      const profilePic =
+        profileUser &&
+        profileUser["data"]["profilePicture"] &&
+        serverPublic + profileUser["data"]["profilePicture"];
+      setProfilePicture(profilePic);
+    };
+
+    fetchProfileUser();
+  }, [userId, user, profilePicture]);
+
   return (
     <div>
       <Paper elevation={0} style={{ padding: 5 }}>
         <div className="ProfileImages">
+          <img src={defaultCover} alt="CoverImage" />
           <img
-            src={
-              user && user["coverPicture"]
-                ? serverPublic + user["coverPicture"]
-                : serverPublic + "defaultCover.jpg"
-            }
-            alt="CoverImage"
-          />
-          <img
-            src={
-              user && user["profilePicture"]
-                ? serverPublic + user["profilePicture"]
-                : serverPublic + "defaultProfile.png"
-            }
+            src={profilePicture || defaultPicture}
             alt="Profile"
-            style={{ width: "20%" }}
+            style={{ width: "80px", padding: 10 }}
           />
         </div>
 
@@ -62,12 +84,12 @@ const ProfileCard = ({ location }) => {
           <hr />
           <div>
             <div className="follow">
-              <span>{(following as unknown as any[]).length}</span>
+              <span>{followingCount || 0}</span>
               <span>Followings</span>
             </div>
             <div className="vl"></div>
             <div className="follow">
-              <span>{(followers as unknown as any[]).length}</span>
+              <span>{followersCount || 0}</span>
               <span>Followers</span>
             </div>
 
@@ -75,13 +97,7 @@ const ProfileCard = ({ location }) => {
               <>
                 <div className="vl"></div>
                 <div className="follow">
-                  <span>
-                    {posts &&
-                      (posts as unknown as any[]).filter(
-                        (post: { userId?: string | number }) =>
-                          void post.userId === userId
-                      ).length}
-                  </span>
+                  <span>{postsCount || 0}</span>
                   <span>Posts</span>
                 </div>
               </>

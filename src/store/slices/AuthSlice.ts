@@ -33,10 +33,13 @@ export const AuthSlice = createSlice({
       return { ..._state, updateLoading: true, error: false };
     },
     UPDATING_SUCCESS: (_state, action) => {
-      localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
+
+      // console.log(action.payload);
+
+      // localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
       return {
         ..._state,
-        authData: action.payload,
+        authData: action.payload.user,
         updateLoading: false,
         error: false,
       };
