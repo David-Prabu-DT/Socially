@@ -6,7 +6,6 @@ import { RootState } from "./store/ReduxStore";
 import Home from "./pages/Home/Home";
 import Auth from "./pages/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
-import Chat from "./pages/Chat/Chat";
 
 const App = () => {
   const user = useSelector((state: RootState) => state.auth.authData);
@@ -47,11 +46,6 @@ const App = () => {
               <p>There's nothing here!</p>
             </main>
           }
-        />
-
-        <Route
-          path="/chat"
-          element={user ? <Chat /> : <Navigate to="/auth" />}
         />
       </Routes>
     </div>

@@ -30,7 +30,7 @@ const PostShare = () => {
     (state: RootState) => state.auth.authData
   );
 
-  const userId: string | null = user && user["_id"];
+  const userId: string = user ? user["_id"] : "";
 
   const loading = useSelector((state: RootState) => state.post.uploading);
   const [desc, setDesc] = useState("");
@@ -54,9 +54,10 @@ const PostShare = () => {
 
     // if there is an image with post
     if (image) {
-      const data: { name?: string; file?: Blob | null } | FormData =
+      const data: {id?: string | null; name?: string; file?: Blob | null } | FormData =
         new FormData();
       const fileName = `${Date.now()} ${image["name"]}`;
+      data.append("id", userId);
       data.append("name", fileName);
       data.append("file", image);
       newPost.image = fileName;
