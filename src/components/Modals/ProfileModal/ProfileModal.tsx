@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { Modal, useMantineTheme } from "@mantine/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { uploadImage } from "../../../actions/UploadAction";
 import { updateUser } from "../../../actions/UserAction";
@@ -26,15 +26,14 @@ const animate = {
 const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   const theme = useMantineTheme();
   const [profileImage, setProfileImage] = useState<Blob | null | any>(null);
-  const [coverImage, setCoverImage] = useState<Blob | null | any>(null);
   const [loading, setLoading] = useState(false);
   const user: authDataType | null = useSelector(
-    (state: RootState) => state.auth.authData
+    (state: RootState) => state["auth"]["authData"]
   );
-  const dispatch = useDispatch();
+
   const param = useParams();
 
-  const userId: string = user ? user["_id"] : "";
+  const userId: string | null = user && user._id!;
 
   const firstname = user && user["firstname"];
   const lastname = user && user["lastname"];
@@ -46,9 +45,7 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      event.target.name === "profileImage"
-        ? setProfileImage(img)
-        : setCoverImage(img);
+      event.target.name === "profileImage" && setProfileImage(img);
     }
   };
 
@@ -82,27 +79,26 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
               id?: string | null;
               name?: string;
               file?: Blob | null;
-            
             }
           | FormData = new FormData();
         const fileName = `${Date.now()} ${profileImage["name"]}`;
-        data.append("id", userId);
+        data.append("id", userId ?? "");
         data.append("name", fileName);
         data.append("file", profileImage);
- 
 
-        try {
-          setTimeout(() => {
-            dispatch(uploadImage(data));
+        setTimeout(() => {
+          try {
+            uploadImage(data);
             setModalOpened(false);
             setLoading(false);
-          }, 2000);
-        } catch (err) {
-          console.log(err);
-        }
+          } catch (err) {
+            console.log(err);
+          }
+        }, 2000);
       }
+
       try {
-        dispatch(updateUser(param["id"], values));
+        updateUser(param["id"], values);
       } catch (error) {
         console.log(error);
       }
@@ -191,7 +187,7 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
                   label="Lives In"
                   {...getFieldProps("livesIn")}
                   error={Boolean(touched.livesIn && errors.livesIn)}
-                  helperText={touched.livesIn && errors.livesIn}
+                  // helperText={touched.livesIn && errors.livesIn}
                   size="small"
                   variant="standard"
                 />
@@ -211,7 +207,7 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
                   label="Country"
                   {...getFieldProps("country")}
                   error={Boolean(touched.country && errors.country)}
-                  helperText={touched.country && errors.country}
+                  // helperText={touched.country && errors.country}
                   size="small"
                   variant="standard"
                 />
@@ -223,7 +219,7 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
                   label="Relationship status"
                   {...getFieldProps("relationship")}
                   error={Boolean(touched.relationship && errors.relationship)}
-                  helperText={touched.relationship && errors.relationship}
+                  // helperText={touched.relationship && errors.relationship}
                   size="small"
                   variant="standard"
                 />

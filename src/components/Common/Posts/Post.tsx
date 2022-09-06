@@ -21,10 +21,10 @@ const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const Post: React.FC<{ data: postDataType }> = ({ data }) => {
   const user: authDataType | null = useSelector(
-    (state: RootState) => state.auth.authData
+    (state: RootState) => state["auth"]["authData"]
   );
 
-  const userId: string | null = user && user["_id"];
+  const userId: string | null = user && user._id!;
 
   const [liked, setLiked] = useState(data?.likes?.includes(userId ?? ""));
   const [likes, setLikes] = useState(data?.likes?.length || 0);

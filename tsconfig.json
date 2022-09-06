@@ -19,5 +19,5 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
-  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "src/components/Home/components/Posts/Posts.tsx", "src/components/Auth/Login/LoginForm.test.tsx"]
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "src/components/Home/components/Posts/Posts.tsx", "src/components/Auth/Login/LoginForm.test.tsx", "src/components/Auth/SignUp/SignUpForm.test.tsx", "src/utils/testUtils.tsx"]
 }

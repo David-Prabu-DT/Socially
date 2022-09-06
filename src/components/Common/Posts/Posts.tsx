@@ -11,13 +11,13 @@ const Posts = () => {
   const params = useParams();
   const dispatch: AppDispatch = useDispatch();
   const user: authDataType | null = useSelector(
-    (state: RootState) => state.auth.authData
+    (state: RootState) => state["auth"]["authData"]
   );
   let { posts, loading } = useSelector(
     (state: postDataType | object[]) => state["post"]
   );
 
-  const userId: string | null = user && user["_id"];
+  const userId: string | null = user && user._id!;
 
   useEffect(() => {
     dispatch(getTimelinePosts(userId));

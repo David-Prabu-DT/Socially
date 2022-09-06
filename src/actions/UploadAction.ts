@@ -7,6 +7,7 @@ const { UPLOAD_START, UPLOAD_SUCCESS, UPLOAD_FAIL } = postActions;
 
 export const uploadImage =
   async (formData: { id: string | null; name?: string; file?: Blob | null; type: string } | FormData) => {
+
     try {
       console.log("Image upload Action started");
       const { data } = await UploadApi.uploadImage(formData);
@@ -15,6 +16,7 @@ export const uploadImage =
 
     } catch (error) {
       console.log(error);
+
     }
   };
 

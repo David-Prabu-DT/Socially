@@ -63,7 +63,12 @@ const SignUpForm = () => {
   return (
     <>
       <FormikProvider value={Formik}>
-        <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Form
+          autoComplete="off"
+          noValidate
+          onSubmit={handleSubmit}
+          data-testid="form"
+        >
           <Stack spacing={3}>
             <Stack
               component={motion.div}
@@ -78,6 +83,7 @@ const SignUpForm = () => {
                 {...getFieldProps("firstname")}
                 error={Boolean(touched.firstname && errors.firstname)}
                 helperText={touched.firstname && errors.firstname}
+                data-testid="firstname"
               />
 
               <TextField
@@ -86,6 +92,7 @@ const SignUpForm = () => {
                 {...getFieldProps("lastname")}
                 error={Boolean(touched.lastname && errors.lastname)}
                 helperText={touched.lastname && errors.lastname}
+                data-testid="lastname"
               />
             </Stack>
 
@@ -103,6 +110,7 @@ const SignUpForm = () => {
                 {...getFieldProps("username")}
                 error={Boolean(touched.username && errors.username)}
                 helperText={touched.username && errors.username}
+                data-testid="username"
               />
 
               <TextField
@@ -123,6 +131,7 @@ const SignUpForm = () => {
                 }}
                 error={Boolean(touched.password && errors.password)}
                 helperText={touched.password && errors.password}
+                data-testid="password"
               />
             </Stack>
 
@@ -137,6 +146,7 @@ const SignUpForm = () => {
                 type="submit"
                 variant="contained"
                 loading={isSubmitting}
+                data-testid="submitBtn"
               >
                 Sign up
               </LoadingButton>

@@ -9,10 +9,10 @@ const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const User = ({ person }: personData) => {
   const user: authDataType | null = useSelector(
-    (state: RootState) => state.auth.authData
+    (state: RootState) => state["auth"]["authData"]
   );
 
-  const userId: string | null = user && user["_id"];
+  const userId: string | null = user && user._id!;
   const dispatch: AppDispatch = useDispatch();
   const [following, setFollowing] = useState(
     person && person["followers"].includes(userId)
