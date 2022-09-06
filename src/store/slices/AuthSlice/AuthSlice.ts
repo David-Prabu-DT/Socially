@@ -32,11 +32,8 @@ export const AuthSlice = createSlice({
     UPDATING_START: (_state) => {
       return { ..._state, updateLoading: true, error: false };
     },
+    
     UPDATING_SUCCESS: (_state, action) => {
-
-      // console.log(action.payload);
-
-      // localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
       return {
         ..._state,
         authData: action.payload.user,
@@ -82,3 +79,7 @@ export const AuthSlice = createSlice({
   },
 
 });
+
+
+// For Test Purpose
+export const AuthReducer = AuthSlice.reducer

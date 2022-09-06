@@ -11,7 +11,7 @@ const {
 } = authActions;
 
 export const updateUser =
-  (id: string, formData: any) =>
+  (id: string | undefined, formData: any) =>
     async (dispatch: AppDispatch) => {
       dispatch(UPDATING_START);
       try {

@@ -161,6 +161,7 @@ const LoginForm = () => {
                 type="submit"
                 variant="contained"
                 loading={loading}
+                data-testid="submitBtn"
               >
                 {loading ? "loading..." : "Login"}
               </LoadingButton>

@@ -12,28 +12,28 @@ const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const ProfileCard = ({ location }) => {
   const user: authDataType | null = useSelector(
-    (state: RootState) => state.auth.authData
+    (state: RootState) => state["auth"]["authData"]
   );
   const posts: postsDataType | null = useSelector(
-    (state: RootState) => state.post.posts
+    (state: RootState) => state["post"]["posts"]
   );
 
   const [profilePicture, setProfilePicture] = useState("");
 
   const ProfilePage = location === "profilePage";
 
-  const userId: string | null = user && user["_id"];
+  const userId: string | null = user && user._id!;
   const firstname = user && user["firstname"];
   const lastname = user && user["lastname"];
   const worksAt =
     user && user["worksAt"] ? user["worksAt"] : "Write about yourself";
 
-  const followingCount: Array<Object> | null =
+  const followingCount: number | false | null =
     user &&
     (user["following"] as unknown as any[]).length !== 0 &&
     (user["following"] as unknown as any[]).length;
 
-  const followersCount: Array<Object> | null =
+  const followersCount: number | false | null =
     user &&
     (user["followers"] as unknown as any[]).length !== 0 &&
     (user["followers"] as unknown as any[]).length;

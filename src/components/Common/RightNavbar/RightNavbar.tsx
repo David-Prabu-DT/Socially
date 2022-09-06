@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
-import SpeakerNotesTwoToneIcon from "@mui/icons-material/SpeakerNotesTwoTone";
+// import SpeakerNotesTwoToneIcon from "@mui/icons-material/SpeakerNotesTwoTone";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, authActions, RootState } from "../../../store/ReduxStore";
@@ -18,7 +18,7 @@ import { authDataType } from "../../../types/Global";
 
 const RightNavbar = () => {
   const user: authDataType | null = useSelector(
-    (state: RootState) => state.auth.authData
+    (state: RootState) => state["auth"]["authData"]
   );
   const dispatch: AppDispatch = useDispatch();
   const handleLogOut = () => {
@@ -26,7 +26,7 @@ const RightNavbar = () => {
   };
 
   const imageSrc = `${window.location.origin}/images/`;
-  const userId: string | null = user && user["_id"];
+  const userId: string | null = user && user._id!;
 
   return (
     <div>

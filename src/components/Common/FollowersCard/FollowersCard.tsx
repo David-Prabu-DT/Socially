@@ -12,10 +12,10 @@ const FollowersCard = ({ location }) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [persons, setPersons] = useState<personData | Array<personData>>();
   const user: authDataType | null = useSelector(
-    (state: RootState) => state.auth.authData
+    (state: RootState) => state["auth"]["authData"]
   );
 
-  const userId: string | null = user && user["_id"];
+  const userId: string | null = user && user._id!;
 
   const cardHeight = location !== "homepage" ? "40vh" : "25vh";
 
