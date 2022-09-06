@@ -27,12 +27,12 @@ const PostShare = () => {
 
   const dispatch: AppDispatch = useDispatch();
   const user: authDataType | null = useSelector(
-    (state: RootState) => state.auth.authData
+    (state: RootState) => state["auth"]["authData"]
   );
 
-  const userId: string = user ? user["_id"] : "";
+  const userId: string | null = user && user._id!;
 
-  const loading = useSelector((state: RootState) => state.post.uploading);
+  const loading = useSelector((state: RootState) => state["post"]["uploading"]);
   const [desc, setDesc] = useState("");
 
   const onImageChange = (_event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,10 +54,11 @@ const PostShare = () => {
 
     // if there is an image with post
     if (image) {
-      const data: {id?: string | null; name?: string; file?: Blob | null } | FormData =
-        new FormData();
+      const data:
+        | { id?: string | null; name?: string; file?: Blob | null }
+        | FormData = new FormData();
       const fileName = `${Date.now()} ${image["name"]}`;
-      data.append("id", userId);
+      data.append("id", userId ?? "");
       data.append("name", fileName);
       data.append("file", image);
       newPost.image = fileName;

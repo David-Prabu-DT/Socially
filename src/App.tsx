@@ -8,7 +8,7 @@ import Auth from "./pages/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
 
 const App = () => {
-  const user = useSelector((state: RootState) => state.auth.authData);
+  const user = useSelector((state: RootState) => state["auth"]["authData"]);
 
   return (
     <div

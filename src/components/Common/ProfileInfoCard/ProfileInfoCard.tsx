@@ -17,9 +17,9 @@ const ProfileInfoCard = () => {
     authDataType | object[] | null
   >({});
   const user: authDataType | null = useSelector(
-    (state: RootState) => state.auth.authData
+    (state: RootState) => state["auth"]["authData"]
   );
-  const userId: string | null = user && user["_id"];
+  const userId: string | null = user && user._id!;
   const relationship: string | null =
     profileUser && profileUser["relationship"];
   const livesIn: string | null = profileUser && profileUser["livesIn"];
