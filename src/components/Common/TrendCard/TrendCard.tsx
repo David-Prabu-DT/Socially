@@ -1,9 +1,13 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import { Card, CardContent, CardHeader, Typography } from "@mui/material";
 import { TrendsData } from "../../../Data/TrendsData";
+import { GlobalContext } from "../../../context/GlobalState";
 
 const TrendCard = () => {
   const TrendData = useMemo(() => TrendsData, []);
+
+  // const { getTrendData } = useContext(GlobalContext);
+
 
   return (
     <div>
