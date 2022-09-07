@@ -26,15 +26,19 @@ export const logIn =
     };
 
 export const signUp =
-  (formData: signUpType, navigate: NavigateFunction) =>
+  (formData: signUpType, navigate: NavigateFunction, responseHandler: any) =>
     async (dispatch: AppDispatch) => {
       dispatch(AUTH_START);
       try {
         const { data } = await AuthApi.signUp(formData);
         dispatch(AUTH_SUCCESS(data));
-        navigate("/home", { replace: true });
+        responseHandler(data);
+
+        setTimeout(() => {
+          navigate("/home", { replace: true });
+        }, 2000);
       } catch (error) {
-        console.log(error);
+        responseHandler(error);
         dispatch(AUTH_FAIL);
       }
     };

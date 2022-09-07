@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <>
     <Provider store={store}>
-      <PersistGate loading={null} persister={persister}>
+      <PersistGate loading={null} persistor={persister}>
         <BrowserRouter>
           <Routes>
             <Route path="*" element={<App />} />

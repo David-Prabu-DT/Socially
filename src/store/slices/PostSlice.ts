@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { postsDataType } from "../../types/Global";
 
 const initialState = { posts: null, loading: false, error: false, uploading: false }
 

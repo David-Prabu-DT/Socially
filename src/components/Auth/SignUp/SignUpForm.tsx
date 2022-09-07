@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { useState } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import {
+  Alert,
   // Alert,
   Box,
   IconButton,
@@ -30,8 +31,25 @@ const animate = {
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState<Boolean>(false);
+  const [open, setOpen] = useState<Boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState<string>("");
+
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
+
+  const responseHandler = (res: {
+    response: { data: React.SetStateAction<string> };
+  }) => {
+    setOpen(true);
+    setLoading(false);
+
+    setAlert(res.response.data);
+
+    setTimeout(() => {
+      setOpen(false);
+    }, 2500);
+  };
 
   const SignUpSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -55,7 +73,7 @@ const SignUpForm = () => {
     },
     validationSchema: SignUpSchema,
     onSubmit: () => {
-      dispatch(signUp(values, navigate));
+      dispatch(signUp(values, navigate, responseHandler));
     },
   });
   const { errors, touched, values, handleSubmit, isSubmitting, getFieldProps } =
@@ -145,17 +163,20 @@ const SignUpForm = () => {
                 size="large"
                 type="submit"
                 variant="contained"
-                loading={isSubmitting}
+                loading={loading}
                 data-testid="submitBtn"
               >
-                Sign Up
+                {loading ? "loading..." : "Sign Up"}
               </LoadingButton>
             </Box>
           </Stack>
         </Form>
       </FormikProvider>
-      <br />
-      {/* <Alert severity="success">This is an error message!</Alert> */}
+      {open && (
+        <Alert style={{ marginTop: 10 }} severity="error">
+          {alert}
+        </Alert>
+      )}
     </>
   );
 };
