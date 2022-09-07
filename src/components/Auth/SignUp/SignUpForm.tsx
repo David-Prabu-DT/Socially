@@ -79,7 +79,7 @@ const SignUpForm = () => {
             >
               <TextField
                 fullWidth
-                label="First name"
+                label="First Name"
                 {...getFieldProps("firstname")}
                 error={Boolean(touched.firstname && errors.firstname)}
                 helperText={touched.firstname && errors.firstname}
@@ -88,7 +88,7 @@ const SignUpForm = () => {
 
               <TextField
                 fullWidth
-                label="Last name"
+                label="Last Name"
                 {...getFieldProps("lastname")}
                 error={Boolean(touched.lastname && errors.lastname)}
                 helperText={touched.lastname && errors.lastname}
@@ -148,7 +148,7 @@ const SignUpForm = () => {
                 loading={isSubmitting}
                 data-testid="submitBtn"
               >
-                Sign up
+                Sign Up
               </LoadingButton>
             </Box>
           </Stack>
