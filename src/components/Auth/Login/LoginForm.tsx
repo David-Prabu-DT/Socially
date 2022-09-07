@@ -36,24 +36,23 @@ const LoginForm = () => {
   const [alert, setAlert] = useState<string>("");
   const dispatch: AppDispatch = useDispatch();
 
-  const LoginSchema = Yup.object().shape({
-    username: Yup.string().required("User Name is required"),
-    password: Yup.string().required("Password is required"),
-  });
-
   const responseHandler = (res: {
     response: { data: React.SetStateAction<string> };
   }) => {
     setOpen(true);
     setLoading(false);
-    setAlert(res.response.data);
-  };
 
-  useEffect(() => {
+    setAlert(res.response.data);
+
     setTimeout(() => {
       setOpen(false);
-    }, 2000);
-  }, [alert, open]);
+    }, 2500);
+  };
+
+  const LoginSchema = Yup.object().shape({
+    username: Yup.string().required("User Name is required"),
+    password: Yup.string().required("Password is required"),
+  });
 
   const Formik = useFormik({
     initialValues: {
