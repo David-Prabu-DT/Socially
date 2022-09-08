@@ -10,7 +10,7 @@ const {
   UN_FOLLOW_USER,
 } = authActions;
 
-export const updateUser =
+export const updateUser: any =
   (id: string | undefined, formData: any) =>
     async (dispatch: AppDispatch) => {
       dispatch(UPDATING_START);

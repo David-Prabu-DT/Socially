@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { Modal, useMantineTheme } from "@mantine/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { uploadImage } from "../../../actions/UploadAction";
 import { updateUser } from "../../../actions/UserAction";
@@ -32,6 +32,7 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   );
 
   const param = useParams();
+  const dispatch = useDispatch();
 
   const userId: string | null = user && user._id!;
 
@@ -48,6 +49,8 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
       event.target.name === "profileImage" && setProfileImage(img);
     }
   };
+
+  const demo = () => {};
 
   const ProfileSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -86,34 +89,30 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
         data.append("name", fileName);
         data.append("file", profileImage);
 
-        setTimeout(() => {
-          try {
-            uploadImage(data);
-            setModalOpened(false);
-            setLoading(false);
-          } catch (err) {
-            console.log(err);
-          }
-        }, 2000);
+        // setTimeout(() => {
+        try {
+          dispatch(uploadImage(data));
+          setModalOpened(false);
+          setLoading(false);
+        } catch (err) {
+          console.log(err);
+        }
+        // }, 2000);
       }
 
-      try {
-        updateUser(param["id"], values);
-      } catch (error) {
-        console.log(error);
-      }
+      dispatch(updateUser(param["id"], values));
     },
   });
   const { errors, touched, values, handleSubmit, getFieldProps } = Formik;
 
   return (
     <>
-      <Snackbar
+      {/* <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
         open={true}
         // onClose={handleClose}
         message="I love snacks"
-      />
+      /> */}
       <Modal
         overlayColor={
           theme.colorScheme === "dark"
@@ -271,7 +270,7 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
                   variant="contained"
                   loading={loading}
                 >
-                  Update
+                  {loading ? "loading..." : "Login"}
                 </LoadingButton>
               </Box>
             </Stack>

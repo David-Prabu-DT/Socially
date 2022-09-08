@@ -1,10 +1,15 @@
+
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { AuthSlice } from "./slices/AuthSlice/AuthSlice";
 import { ChatUserSlice } from "./slices/ChatUserSlice";
 import { PostSlice } from "./slices/PostSlice";
 import storage from "redux-persist/lib/storage/session";
 import { persistReducer, persistStore } from "redux-persist";
+import { getDefaultMiddleware } from '@reduxjs/toolkit';
 // import thunk from "redux-thunk";
+
+
+
 
 const persistConfig = {
   key: "root",
@@ -21,7 +26,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  // middleware: [thunk]
+  middleware: getDefaultMiddleware({
+    serializableCheck: false
+  })
+
 });
 
 export default store;

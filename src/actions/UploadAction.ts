@@ -5,8 +5,9 @@ import { uploadPostType } from "../types/Global";
 
 const { UPLOAD_START, UPLOAD_SUCCESS, UPLOAD_FAIL } = postActions;
 
-export const uploadImage =
-  async (formData: { id: string | null; name?: string; file?: Blob | null; type: string } | FormData) => {
+export const uploadImage: any =
+  (formData: { id: string | null; name?: string; file?: Blob | null; type: string } | FormData) => async (dispatch: AppDispatch) => {
+
 
     try {
       console.log("Image upload Action started");
