@@ -10,9 +10,9 @@ export const GlobalProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_API_URL)
-      .then((response) => getTrendData(response.data));
+    // axios
+    //   .get(/*process.env.REACT_APP_API_URL*/)
+    //   .then((response) => getTrendData(response.data));
   }, []);
 
   const getTrendData = (trendData: any) => {
