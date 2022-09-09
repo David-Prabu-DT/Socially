@@ -1,21 +1,20 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import AppReducer from "./reducer/AppReducer";
-import axios from "axios";
-
+import { TrendsData } from "../Data/TrendsData";
 const initialState = {};
 
 export const GlobalContext = createContext(initialState);
 
-export const GlobalProvider = ({ children }: any) => {
+export const GlobalProvider: React.FC<React.ReactNode> = ({
+  children,
+}: any) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   useEffect(() => {
-    // axios
-    //   .get(/*process.env.REACT_APP_API_URL*/)
-    //   .then((response) => getTrendData(response.data));
+    getTrendData(TrendsData);
   }, []);
 
-  const getTrendData = (trendData: any) => {
+  const getTrendData = (trendData: object[]) => {
     dispatch({
       type: "GET_TRENDS_DATA",
       payload: trendData,

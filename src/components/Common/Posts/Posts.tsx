@@ -32,7 +32,7 @@ const Posts = () => {
 
   return (
     <>
-      <div style={{ height: "75vh", overflow: "scroll" }}>
+      <div style={{ height: "90vh", overflow: "scroll" }}>
         {!posts ? (
           <Alert variant="outlined" severity="info">
             <AlertTitle>Info</AlertTitle>

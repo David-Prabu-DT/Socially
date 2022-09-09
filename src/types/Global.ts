@@ -74,5 +74,13 @@ export interface PostsDataType {
   updatedAt?: string,
   __v?: number
   filter: Function;
+}
 
+export interface UpdateUserType {
+  firstname?: string,
+  lastname?: string,
+  worksAt?: string,
+  livesIn?: string,
+  country?: string,
+  relationship?: string,
 }

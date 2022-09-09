@@ -7,10 +7,11 @@ import { uploadImage } from "../../../actions/UploadAction";
 import { updateUser } from "../../../actions/UserAction";
 import { useFormik, Form, FormikProvider } from "formik";
 import { motion } from "framer-motion";
-import { Box, Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { Box, Stack, TextField, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { AuthDataType } from "../../../types/Global";
 import { RootState } from "../../../store/ReduxStore";
+import { ToastContainer, toast } from "react-toastify";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -25,7 +26,7 @@ const animate = {
 
 const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   const theme = useMantineTheme();
-  const [profileImage, setProfileImage] = useState<Blob | null | any>(null);
+  const [profileImage, setProfileImage] = useState<Blob | null>(null);
   const [loading, setLoading] = useState(false);
   const user: AuthDataType | null = useSelector(
     (state: RootState) => state["auth"]["authData"]["user"]
@@ -87,18 +88,30 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
         data.append("name", fileName);
         data.append("file", profileImage);
 
-        // setTimeout(() => {
         try {
           dispatch(uploadImage(data));
-          setModalOpened(false);
-          setLoading(false);
+          setTimeout(() => {
+            setModalOpened(false);
+            setLoading(false);
+            toast.success("User Image Updated !");
+          }, 2000);
         } catch (err) {
           console.log(err);
+          toast.error("Something Error!!");
         }
-        // }, 2000);
       }
 
-      dispatch(updateUser(param["id"], values));
+      try {
+        dispatch(updateUser(param["id"], values));
+        setTimeout(() => {
+          setModalOpened(false);
+          setLoading(false);
+          toast.success("User Details Updated!");
+        }, 2000);
+      } catch (error) {
+        console.log(error);
+        toast.error("Something Error!!");
+      }
     },
   });
   const { errors, touched, values, handleSubmit, getFieldProps } = Formik;
@@ -268,15 +281,14 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
                   variant="contained"
                   loading={loading}
                 >
-                  {loading ? "loading..." : "Login"}
+                  {loading ? "loading..." : "Update"}
                 </LoadingButton>
               </Box>
             </Stack>
           </Form>
         </FormikProvider>
-        <br />
-        {/* <Alert severity="success">This is an error message!</Alert> */}
       </Modal>
+      <ToastContainer />
     </>
   );
 };

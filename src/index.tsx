@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
-
 import App from "./App";
+import "react-toastify/dist/ReactToastify.css";
 import store, { persister } from "./store/ReduxStore";
 
 const root = ReactDOM.createRoot(

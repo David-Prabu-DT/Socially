@@ -12,5 +12,6 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const uploadImage = (formData: any) => API.post("/upload/", formData);
+export const uploadImage = (formData: { id: string | null; name?: string; file?: Blob | null; type: string } | FormData) => API.post("/upload/", formData);
+
 export const uploadPost = <T>(data: T) => API.post("/posts", data);

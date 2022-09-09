@@ -11,9 +11,12 @@ import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const ProfileCard = ({ location }) => {
-  const user: AuthDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]["user"]
+  const userData: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]
   );
+
+  const user: any | null = userData && userData["user"];
+
   const posts: PostsDataType | null = useSelector(
     (state: RootState) => state["post"]["posts"]
   );
@@ -23,6 +26,7 @@ const ProfileCard = ({ location }) => {
   const ProfilePage = location === "profilePage";
 
   const userId: string | null = user && user._id!;
+
   const firstname = user && user["firstname"];
   const lastname = user && user["lastname"];
   const worksAt =
@@ -30,17 +34,17 @@ const ProfileCard = ({ location }) => {
 
   const followingCount: number | false | null =
     user &&
-    (user["following"] as unknown as any[]).length !== 0 &&
-    (user["following"] as unknown as any[]).length;
+    (user["following"] as unknown as object[]).length !== 0 &&
+    (user["following"] as unknown as object[]).length;
 
   const followersCount: number | false | null =
     user &&
-    (user["followers"] as unknown as any[]).length !== 0 &&
-    (user["followers"] as unknown as any[]).length;
+    (user["followers"] as unknown as object[]).length !== 0 &&
+    (user["followers"] as unknown as object[]).length;
 
   const postsCount =
     posts &&
-    (posts as unknown as any[]).filter((post) => post["userId"] === userId)
+    (posts as unknown as object[]).filter((post) => post["userId"] === userId)
       .length;
 
   const defaultPicture = serverPublic + "defaultProfile.png";
@@ -60,7 +64,6 @@ const ProfileCard = ({ location }) => {
 
     fetchProfileUser();
   }, [userId, user, profilePicture]);
-
   return (
     <div>
       <Paper elevation={0} style={{ padding: 5 }}>

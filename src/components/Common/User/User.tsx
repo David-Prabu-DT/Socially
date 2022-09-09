@@ -23,13 +23,13 @@ const User = ({ person }: PersonData) => {
   const firstname = person && person["firstname"];
   const username = person && person["username"];
 
-  const handleFollow = useCallback(async () => {
-    dispatch(
-      following ? unFollowUser(personId, user) : followUser(personId, user)
-    );
+  const handleFollow = () => {
+    following
+      ? dispatch(unFollowUser(personId, user))
+      : dispatch(followUser(personId, user));
 
-    setFollowing((prev: any) => !prev);
-  }, [dispatch, following, personId, user]);
+    setFollowing((prev: object) => !prev);
+  };
 
   return (
     <div>

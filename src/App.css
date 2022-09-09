@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
 :root {
   --yellow: #f5c32c;
   --orange: #fca61f;
@@ -13,7 +15,14 @@
   --location: #ef5757;
   --schedule: #e1ae4a;
 }
-body{
+
+.MuiTypography-root,
+.MuiInputBase-root-MuiOutlinedInput-root,
+.MuiFormLabel-root-MuiInputLabel-root {
+  font-family: "Poppins", sans-serif !important;
+}
+body {
+  font-family: "Poppins", sans-serif !important;
   background-color: #ebebeb;
 }
 
