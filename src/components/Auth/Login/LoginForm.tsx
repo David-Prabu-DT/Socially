@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
@@ -30,8 +30,8 @@ const animate = {
 };
 
 const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState<Boolean>(false);
-  const [open, setOpen] = useState<Boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<string>("");
   const dispatch: AppDispatch = useDispatch();
@@ -42,7 +42,7 @@ const LoginForm = () => {
     setOpen(true);
     setLoading(false);
 
-    setAlert(res.response.data);
+    setAlert(res?.response?.data);
 
     setTimeout(() => {
       setOpen(false);

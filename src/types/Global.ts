@@ -1,36 +1,33 @@
-export interface logInType {
+export interface LogInType {
   email?: string | number;
   password?: string | number;
 }
 
-export interface signUpType {
+export interface SignUpType {
   firstName?: string;
   lastName?: string;
   email?: string | number;
   password?: string | number;
 }
 
-export interface userAuthType {
+
+export interface PostsType {
   _id?: number | string | null;
 }
 
-export interface postsType {
-  _id?: number | string | null;
-}
-
-export interface profileUserType {
+export interface ProfileUserType {
   relationship?: string;
   livesIn?: string;
   worksAt?: string;
 }
 
-export interface uploadPostType {
+export interface UploadPostType {
   userId?: string | number | null;
   desc?: string | null;
-  image?: string | Blob | null | undefined;
+  image?: string | Blob | null;
 }
 
-export interface postDataType {
+export interface PostDataType {
   createdAt: string;
   post: object[];
   _id: number | string;
@@ -44,13 +41,13 @@ export interface postDataType {
   liked?: boolean;
 }
 
-export interface personData {
+export interface PersonData {
   _id?: number | string;
   person?: object[];
   followers?: number[] | string[];
 }
 
-export interface authDataType {
+export interface AuthDataType {
   _id?: string | never,
   username?: string,
   password?: string,
@@ -67,7 +64,7 @@ export interface authDataType {
   __v?: number
 }
 
-export interface postsDataType {
+export interface PostsDataType {
   _id?: string,
   userId?: string,
   desc?: string,

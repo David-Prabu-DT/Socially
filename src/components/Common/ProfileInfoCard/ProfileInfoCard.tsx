@@ -7,17 +7,17 @@ import { useParams } from "react-router-dom";
 import * as UserApi from "../../../api/UserRequests";
 import { RootState } from "../../../store/ReduxStore";
 import { IconButton, Paper, Tooltip, Typography } from "@mui/material";
-import { authDataType } from "../../../types/Global";
+import { AuthDataType } from "../../../types/Global";
 
 const ProfileInfoCard = () => {
   const params = useParams();
   const [modalOpened, setModalOpened] = useState(false);
   const profileUserId: string | null = String(params["id"]);
   const [profileUser, setProfileUser] = useState<
-    authDataType | object[] | null
+    AuthDataType | object[] | null
   >({});
-  const user: authDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]
+  const user: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]["user"]
   );
   const userId: string | null = user && user._id!;
   const relationship: string | null =

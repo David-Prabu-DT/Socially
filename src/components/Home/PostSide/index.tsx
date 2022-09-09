@@ -7,7 +7,7 @@ import { CircularProgress } from "@mui/material";
 const Posts = React.lazy(() => import("../../Common/Posts/Posts"));
 
 const PostSide = () => {
-  const [modalOpened, setModalOpened] = useState<Boolean>(false);
+  const [modalOpened, setModalOpened] = useState<boolean>(false);
 
   return (
     <div>

@@ -1,14 +1,14 @@
 import { authActions } from "./../store/ReduxStore";
 import * as AuthApi from "../api/AuthRequests";
 import { AppDispatch } from "../store/ReduxStore";
-import { logInType, signUpType } from "../types/Global";
+import { LogInType, SignUpType } from "../types/Global";
 import { NavigateFunction } from "react-router-dom";
 
 const { AUTH_START, AUTH_SUCCESS, AUTH_FAIL } = authActions;
 
 export const logIn =
   (
-    formData: logInType,
+    formData: LogInType,
     responseHandler: any
   ) =>
     async (dispatch: AppDispatch) => {
@@ -26,7 +26,7 @@ export const logIn =
     };
 
 export const signUp =
-  (formData: signUpType, navigate: NavigateFunction, responseHandler: any) =>
+  (formData: SignUpType, navigate: NavigateFunction, responseHandler: any) =>
     async (dispatch: AppDispatch) => {
       dispatch(AUTH_START);
       try {

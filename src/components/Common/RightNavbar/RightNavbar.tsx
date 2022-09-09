@@ -14,11 +14,11 @@ import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, authActions, RootState } from "../../../store/ReduxStore";
-import { authDataType } from "../../../types/Global";
+import { AuthDataType } from "../../../types/Global";
 
 const RightNavbar = () => {
-  const user: authDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]
+  const user: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]["user"]
   );
   const dispatch: AppDispatch = useDispatch();
   const handleLogOut = () => {

@@ -8,6 +8,12 @@ const AppReducer = (state: any, action: any) => {
         employees: action.payload,
       };
 
+    case "TRENDS_DATA":
+      break;
+
+    case "GET_DATA":
+      break;
+
     default:
       return state;
   }

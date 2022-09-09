@@ -17,7 +17,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/ReduxStore";
 import { uploadImage, uploadPost } from "../../../actions/UploadAction";
-import { authDataType, uploadPostType } from "../../../types/Global";
+import { AuthDataType, UploadPostType } from "../../../types/Global";
 
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -26,8 +26,8 @@ const PostShare = () => {
   const imageRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const dispatch: AppDispatch = useDispatch();
-  const user: authDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]
+  const user: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]["user"]
   );
 
   const userId: string | null = user && user._id!;
@@ -47,7 +47,7 @@ const PostShare = () => {
     e.preventDefault();
 
     //post data
-    const newPost: uploadPostType = {
+    const newPost: UploadPostType = {
       userId: userId ?? "",
       desc: desc,
     };

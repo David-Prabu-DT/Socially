@@ -8,7 +8,6 @@ const {
    AUTH_SUCCESS,
    AUTH_FAIL,
    UPDATING_START,
-   UPDATING_SUCCESS,
    UPDATING_FAIL,
    LOG_OUT
 } = authActions;
@@ -53,7 +52,7 @@ describe("Auth Reducer", () => {
       store.dispatch(AUTH_SUCCESS({
          authData: {
             username: "david",
-            password: "12345678",
+            password: "qwerty",
          }
       }));
 
@@ -88,26 +87,6 @@ describe("Auth Reducer", () => {
       const state = AuthReducer(initialState, action);
       expect(state).toEqual({ ...initialState, updateLoading: true, error: false });
    });
-
-
-   test("UPDATING_SUCCESS", () => {
-      const store = configureStore({ reducer: AuthSlice.reducer });
-
-      store.dispatch(UPDATING_SUCCESS({
-         authData: {
-            username: "david",
-            password: "12345678",
-         }
-      }));
-
-      expect(store.getState()).toEqual({
-         authData: undefined,
-         error: false,
-         loading: false,
-         updateLoading: false,
-      });
-   })
-
 
 
    test("UPDATING_FAIL", () => {
