@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
 import {
-  Alert,
-  // Alert,
   Box,
   IconButton,
   InputAdornment,
@@ -12,6 +10,7 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { LoadingButton } from "@mui/lab";
+import { ToastContainer, toast } from "react-toastify";
 import { signUp } from "../../../actions/AuthActions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -30,9 +29,7 @@ const animate = {
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState<string>("");
 
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
@@ -40,14 +37,8 @@ const SignUpForm = () => {
   const responseHandler = (res: {
     response: { data: React.SetStateAction<string> };
   }) => {
-    setOpen(true);
     setLoading(false);
-
-    setAlert(res.response.data);
-
-    setTimeout(() => {
-      setOpen(false);
-    }, 2500);
+    toast.error(String(res?.response?.data));
   };
 
   const SignUpSchema = Yup.object().shape({
@@ -170,11 +161,7 @@ const SignUpForm = () => {
           </Stack>
         </Form>
       </FormikProvider>
-      {open && (
-        <Alert style={{ marginTop: 10 }} severity="error">
-          {alert}
-        </Alert>
-      )}
+      <ToastContainer />
     </>
   );
 };

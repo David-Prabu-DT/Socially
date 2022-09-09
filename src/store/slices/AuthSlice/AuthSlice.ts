@@ -50,22 +50,42 @@ export const AuthSlice = createSlice({
          return {
             ..._state,
             authData: {
-               ..._state?.authData,
-               following: [..._state?.authData?.following, action.payload],
-            },
-         };
+               ..._state.authData,
+               user: {
+                  ..._state.authData.user,
+                  following: [..._state.authData.user.following, action.payload]
+               }
+            }
+         }
+
       },
       UN_FOLLOW_USER: (_state: any, action: any) => {
+
+         console.log(action.payload)
+
 
          return {
             ..._state,
             authData: {
-               ..._state?.authData,
-               following: [..._state?.authData?.following.filter(
-                  (personId: number) => personId !== action.payload
-               )],
-            },
-         };
+               ..._state.authData,
+               user: {
+                  ..._state.authData.user,
+                  following: [..._state.authData.user.following.filter(
+                     (personId: string) => personId !== action.payload)]
+               }
+            }
+         }
+
+
+         // return {
+         //    ..._state,
+         //    authData: {
+         //       ..._state?.authData,
+         //       following: [..._state?.authData?.following.filter(
+         //          (personId: number) => personId !== action.payload
+         //       )],
+         //    },
+         // };
       },
       LOG_OUT: (_state) => {
          localStorage.clear();

@@ -17,7 +17,7 @@ const FollowersCard = ({ location }) => {
 
   const userId: string | null = user && user._id!;
 
-  const cardHeight = location !== "homepage" ? "40vh" : "25vh";
+  const cardHeight = location !== "homepage" ? "60vh" : "30vh";
 
   useEffect(() => {
     const fetchPersons = async () => {

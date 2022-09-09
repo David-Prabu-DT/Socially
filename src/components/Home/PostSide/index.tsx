@@ -13,9 +13,9 @@ const PostSide = () => {
     <div>
       <Button
         variant="contained"
-        color="success"
+        color="warning"
         startIcon={<AddCircleTwoToneIcon />}
-        style={{ marginTop: 25, marginBottom: 25 }}
+        style={{ marginBottom: 10 }}
         fullWidth
         onClick={() => setModalOpened(true)}
       >

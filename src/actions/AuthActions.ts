@@ -9,16 +9,13 @@ const { AUTH_START, AUTH_SUCCESS, AUTH_FAIL } = authActions;
 export const logIn =
   (
     formData: LogInType,
-    responseHandler: any
+    responseHandler: Function
   ) =>
     async (dispatch: AppDispatch) => {
       dispatch(AUTH_START);
       try {
         const { data } = await AuthApi.logIn(formData);
-        console.log(data);
-
         dispatch(AUTH_SUCCESS(data));
-        responseHandler(data);
       } catch (error) {
         responseHandler(error);
         dispatch(AUTH_FAIL);
@@ -26,7 +23,7 @@ export const logIn =
     };
 
 export const signUp =
-  (formData: SignUpType, navigate: NavigateFunction, responseHandler: any) =>
+  (formData: SignUpType, navigate: NavigateFunction, responseHandler: Function) =>
     async (dispatch: AppDispatch) => {
       dispatch(AUTH_START);
       try {

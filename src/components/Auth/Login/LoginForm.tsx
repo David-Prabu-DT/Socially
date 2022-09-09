@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/ReduxStore";
 import { logIn } from "../../../actions/AuthActions";
 import {
-  Alert,
   Box,
   IconButton,
   InputAdornment,
@@ -17,6 +16,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -31,22 +31,14 @@ const animate = {
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState<string>("");
   const dispatch: AppDispatch = useDispatch();
 
   const responseHandler = (res: {
     response: { data: React.SetStateAction<string> };
   }) => {
-    setOpen(true);
     setLoading(false);
-
-    setAlert(res?.response?.data);
-
-    setTimeout(() => {
-      setOpen(false);
-    }, 2500);
+    toast.error(String(res?.response?.data));
   };
 
   const LoginSchema = Yup.object().shape({
@@ -168,12 +160,7 @@ const LoginForm = () => {
           </Box>
         </Form>
       </FormikProvider>
-
-      {open && (
-        <Alert style={{ marginTop: 10 }} severity="error">
-          {alert}
-        </Alert>
-      )}
+      <ToastContainer />
     </>
   );
 };

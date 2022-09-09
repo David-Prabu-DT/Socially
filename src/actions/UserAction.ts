@@ -11,7 +11,7 @@ const {
 } = authActions;
 
 export const updateUser: any =
-  (id: string | undefined, formData: any) =>
+  (id: string | undefined, formData: object[]) =>
     async (dispatch: AppDispatch) => {
       dispatch(UPDATING_START);
       try {
@@ -26,12 +26,12 @@ export const followUser =
   <T>(id: string | number, data: T) =>
     async (dispatch: AppDispatch) => {
       UserApi.followUser(id, data);
-      dispatch(FOLLOW_USER(id));
+      dispatch(FOLLOW_USER(data));
     };
 
 export const unFollowUser =
   <T>(id: string | number, data: T) =>
     async (dispatch: AppDispatch) => {
-      dispatch(UN_FOLLOW_USER(id));
       UserApi.unFollowUser(id, data);
+      dispatch(UN_FOLLOW_USER(data));
     };
