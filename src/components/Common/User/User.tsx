@@ -3,13 +3,13 @@ import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { followUser, unFollowUser } from "../../../actions/UserAction";
 import { AppDispatch, RootState } from "../../../store/ReduxStore";
-import { authDataType, personData } from "../../../types/Global";
+import { AuthDataType, PersonData } from "../../../types/Global";
 
 const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
-const User = ({ person }: personData) => {
-  const user: authDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]
+const User = ({ person }: PersonData) => {
+  const user: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]["user"]
   );
 
   const userId: string | null = user && user._id!;

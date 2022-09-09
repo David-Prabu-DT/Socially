@@ -1,15 +1,10 @@
 
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { AuthSlice } from "./slices/AuthSlice/AuthSlice";
-import { ChatUserSlice } from "./slices/ChatUserSlice";
-import { PostSlice } from "./slices/PostSlice";
 import storage from "redux-persist/lib/storage/session";
 import { persistReducer, persistStore } from "redux-persist";
-import { getDefaultMiddleware } from '@reduxjs/toolkit';
-// import thunk from "redux-thunk";
-
-
-
+import { ChatUserSlice } from "./slices/ChatUserSlice/ChatUserSlice";
+import { PostSlice } from "./slices/PostSlice/PostSlice";
 
 const persistConfig = {
   key: "root",

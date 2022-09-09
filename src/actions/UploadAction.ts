@@ -1,13 +1,12 @@
 
 import * as UploadApi from "../api/UploadRequest";
 import { AppDispatch, postActions } from "../store/ReduxStore";
-import { uploadPostType } from "../types/Global";
+import { UploadPostType } from "../types/Global";
 
 const { UPLOAD_START, UPLOAD_SUCCESS, UPLOAD_FAIL } = postActions;
 
 export const uploadImage: any =
-  (formData: { id: string | null; name?: string; file?: Blob | null; type: string } | FormData) => async (dispatch: AppDispatch) => {
-
+  (formData: { id: string | null; name?: string; file?: Blob | null; type: string } | FormData) => async (_dispatch: AppDispatch) => {
 
     try {
       console.log("Image upload Action started");
@@ -22,7 +21,7 @@ export const uploadImage: any =
   };
 
 export const uploadPost =
-  (data: uploadPostType) => async (dispatch: AppDispatch) => {
+  (data: UploadPostType) => async (dispatch: AppDispatch) => {
     dispatch(UPLOAD_START);
     try {
       const newPost = await UploadApi.uploadPost(data);

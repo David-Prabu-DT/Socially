@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
-import { useState } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import {
   Alert,
@@ -30,8 +29,8 @@ const animate = {
 };
 
 const SignUpForm = () => {
-  const [showPassword, setShowPassword] = useState<Boolean>(false);
-  const [open, setOpen] = useState<Boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<string>("");
 
@@ -76,8 +75,7 @@ const SignUpForm = () => {
       dispatch(signUp(values, navigate, responseHandler));
     },
   });
-  const { errors, touched, values, handleSubmit, isSubmitting, getFieldProps } =
-    Formik;
+  const { errors, touched, values, handleSubmit, getFieldProps } = Formik;
   return (
     <>
       <FormikProvider value={Formik}>

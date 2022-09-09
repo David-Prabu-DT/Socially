@@ -9,7 +9,7 @@ import { useFormik, Form, FormikProvider } from "formik";
 import { motion } from "framer-motion";
 import { Box, Snackbar, Stack, TextField, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { authDataType } from "../../../types/Global";
+import { AuthDataType } from "../../../types/Global";
 import { RootState } from "../../../store/ReduxStore";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
@@ -27,8 +27,8 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   const theme = useMantineTheme();
   const [profileImage, setProfileImage] = useState<Blob | null | any>(null);
   const [loading, setLoading] = useState(false);
-  const user: authDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]
+  const user: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]["user"]
   );
 
   const param = useParams();
@@ -49,8 +49,6 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
       event.target.name === "profileImage" && setProfileImage(img);
     }
   };
-
-  const demo = () => {};
 
   const ProfileSchema = Yup.object().shape({
     firstname: Yup.string()

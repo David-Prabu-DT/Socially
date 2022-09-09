@@ -4,17 +4,17 @@ import { Button, Paper } from "@mui/material";
 import { RootState } from "../../../store/ReduxStore";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { authDataType, postsDataType } from "../../../types/Global";
+import { AuthDataType, PostsDataType } from "../../../types/Global";
 import * as UserApi from "../../../api/UserRequests";
 import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
 
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const ProfileCard = ({ location }) => {
-  const user: authDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]
+  const user: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]["user"]
   );
-  const posts: postsDataType | null = useSelector(
+  const posts: PostsDataType | null = useSelector(
     (state: RootState) => state["post"]["posts"]
   );
 
