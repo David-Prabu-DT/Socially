@@ -26,9 +26,11 @@ const PostShare = () => {
   const imageRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const dispatch: AppDispatch = useDispatch();
-  const user: AuthDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]["user"]
+  const userData: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]
   );
+
+  const user: any | null = userData && userData["user"];
 
   const userId: string | null = user && user._id!;
 

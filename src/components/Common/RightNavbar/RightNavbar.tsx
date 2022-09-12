@@ -17,9 +17,12 @@ import { AppDispatch, authActions, RootState } from "../../../store/ReduxStore";
 import { AuthDataType } from "../../../types/Global";
 
 const RightNavbar = () => {
-  const user: AuthDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]["user"]
+  const userData: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]
   );
+
+  const user: any | null = userData && userData["user"];
+
   const dispatch: AppDispatch = useDispatch();
   const handleLogOut = () => {
     dispatch(authActions.LOG_OUT());

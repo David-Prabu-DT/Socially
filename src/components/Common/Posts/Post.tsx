@@ -20,9 +20,11 @@ import { AuthDataType, PostDataType } from "../../../types/Global";
 const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const Post: React.FC<{ data: PostDataType }> = ({ data }) => {
-  const user: AuthDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]["user"]
+  const userData: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]
   );
+
+  const user: any | null = userData && userData["user"];
 
   const userId: string | null = user && user._id!;
 

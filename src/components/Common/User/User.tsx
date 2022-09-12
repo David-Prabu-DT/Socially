@@ -8,9 +8,11 @@ import { AuthDataType, PersonData } from "../../../types/Global";
 const publicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const User = ({ person }: PersonData) => {
-  const user: AuthDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]["user"]
+  const userData: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]
   );
+
+  const user: any | null = userData && userData["user"];
 
   const userId: string | null = user && user._id!;
   const dispatch: AppDispatch = useDispatch();
@@ -23,13 +25,21 @@ const User = ({ person }: PersonData) => {
   const firstname = person && person["firstname"];
   const username = person && person["username"];
 
-  const handleFollow = () => {
+  const handleFollow = useCallback(() => {
     following
       ? dispatch(unFollowUser(personId, user))
       : dispatch(followUser(personId, user));
 
     setFollowing((prev: object) => !prev);
-  };
+  }, [dispatch, following, personId, user]);
+
+  // const handleFollow = () => {
+  //   following
+  //     ? dispatch(unFollowUser(personId, user))
+  //     : dispatch(followUser(personId, user));
+
+  //   setFollowing((prev: object) => !prev);
+  // };
 
   return (
     <div>

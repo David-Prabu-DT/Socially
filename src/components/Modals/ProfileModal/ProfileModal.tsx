@@ -28,10 +28,10 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   const theme = useMantineTheme();
   const [profileImage, setProfileImage] = useState<Blob | null>(null);
   const [loading, setLoading] = useState(false);
-  const user: AuthDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]["user"]
+  const userData: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]
   );
-
+  const user: any | null = userData && userData["user"];
   const param = useParams();
   const dispatch = useDispatch();
 

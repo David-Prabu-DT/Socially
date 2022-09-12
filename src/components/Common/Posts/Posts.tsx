@@ -10,9 +10,11 @@ import { AuthDataType, PostDataType } from "../../../types/Global";
 const Posts = () => {
   const params = useParams();
   const dispatch: AppDispatch = useDispatch();
-  const user: AuthDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]["user"]
+  const userData: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]
   );
+  const user: any | null = userData && userData["user"];
+
   let { posts, loading } = useSelector(
     (state: PostDataType | object[]) => state["post"]
   );

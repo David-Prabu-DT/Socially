@@ -11,9 +11,10 @@ const User = React.lazy(() => import("../User/User"));
 const FollowersCard = ({ location }) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [persons, setPersons] = useState<PersonData | Array<PersonData>>();
-  const user: AuthDataType | null = useSelector(
-    (state: RootState) => state["auth"]["authData"]["user"]
+  const userData: AuthDataType | null = useSelector(
+    (state: RootState) => state["auth"]["authData"]
   );
+  const user: any | null = userData && userData["user"];
 
   const userId: string | null = user && user._id!;
 
@@ -22,7 +23,8 @@ const FollowersCard = ({ location }) => {
   useEffect(() => {
     const fetchPersons = async () => {
       const { data } = await getAllUser();
-      setPersons(data);
+
+      setPersons(data.users);
     };
     fetchPersons();
   }, []);
